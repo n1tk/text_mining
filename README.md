@@ -7,5 +7,4 @@ work completed under text minning
 
 #sudo pip install -r text_mining_requirements.txt --upgrade
 
-
-
+-for win users please ignore "sudo" and probably will need to be opened terminal under administrator for upgrade. 
