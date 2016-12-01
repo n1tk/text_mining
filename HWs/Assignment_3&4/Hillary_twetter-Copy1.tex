@@ -1,0 +1,1381 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font than Computer Modern for most use cases
+    \usepackage{palatino}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{Hillary\_twetter-Copy1}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{o}{\PYZpc{}}\PY{k}{matplotlib} inline
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+        \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+        \PY{k+kn}{import} \PY{n+nn}{csv}
+        \PY{k+kn}{from} \PY{n+nn}{datetime} \PY{k}{import} \PY{n}{datetime}
+        \PY{k+kn}{import} \PY{n+nn}{re}
+        \PY{k+kn}{from} \PY{n+nn}{twython} \PY{k}{import} \PY{n}{Twython}
+        \PY{k+kn}{from} \PY{n+nn}{twython} \PY{k}{import} \PY{n}{TwythonStreamer}
+        \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+        \PY{k+kn}{from} \PY{n+nn}{collections} \PY{k}{import} \PY{n}{Counter}
+        \PY{k+kn}{from} \PY{n+nn}{nltk}\PY{n+nn}{.}\PY{n+nn}{corpus} \PY{k}{import} \PY{n}{stopwords}
+        \PY{k+kn}{import} \PY{n+nn}{string}
+        \PY{k+kn}{import} \PY{n+nn}{nltk}
+        \PY{n}{nltk}\PY{o}{.}\PY{n}{download}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{stopwords}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[nltk\_data] Downloading package stopwords to
+[nltk\_data]     /Users/sbuciuma/nltk\_data{\ldots}
+[nltk\_data]   Package stopwords is already up-to-date!
+
+    \end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}1}]:} True
+\end{Verbatim}
+        
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{n}{APP\PYZus{}KEY} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{LUpqT9BUMzTzdDFVYMls5myJe}\PY{l+s+s2}{\PYZdq{}}
+        \PY{n}{APP\PYZus{}SECRET} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{EP31NVKfAg1kWnE3CA0FRRARJMX07irWX9VQUNyUU2pnFPlBeg}\PY{l+s+s2}{\PYZdq{}}
+        \PY{n}{twitter} \PY{o}{=} \PY{n}{Twython}\PY{p}{(}\PY{n}{APP\PYZus{}KEY}\PY{p}{,} \PY{n}{APP\PYZus{}SECRET}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{17}\PY{p}{)}\PY{p}{:}
+            \PY{n}{user\PYZus{}timeline} \PY{o}{=} \PY{n}{twitter}\PY{o}{.}\PY{n}{get\PYZus{}user\PYZus{}timeline}\PY{p}{(}\PY{n}{screen\PYZus{}name}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{HillaryClinton}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{count}\PY{o}{=}\PY{l+m+mi}{1000}\PY{p}{,} \PY{n}{include\PYZus{}rts}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{c+c1}{\PYZsh{}lis=user\PYZus{}timeline[0][\PYZsq{}id\PYZsq{}]\PYZhy{}1 \PYZsh{}tweet id \PYZsh{} for most recent tweet}
+        \PY{c+c1}{\PYZsh{}only query as deep as necessary}
+        \PY{c+c1}{\PYZsh{}tweetsum= user\PYZus{}timeline[0][\PYZsq{}user\PYZsq{}][\PYZsq{}statuses\PYZus{}count\PYZsq{}]}
+        \PY{c+c1}{\PYZsh{}cycles=ceil(tweetsum / 200)}
+        \PY{c+c1}{\PYZsh{}if cycles\PYZgt{}16:}
+            \PY{c+c1}{\PYZsh{}cycles=16 \PYZsh{}API only allows depth of 3200 so no point trying deeper than 200*16}
+        \PY{c+c1}{\PYZsh{}time.sleep(60)}
+        \PY{c+c1}{\PYZsh{}for i in range(0, cycles): \PYZsh{}\PYZsh{} iterate through all tweets up to max of 3200}
+            \PY{c+c1}{\PYZsh{}incremental = twitter.get\PYZus{}user\PYZus{}timeline(screen\PYZus{}name=handle,}
+            \PY{c+c1}{\PYZsh{}count=200, include\PYZus{}retweets=True, max\PYZus{}id=lis)}
+            \PY{c+c1}{\PYZsh{}user\PYZus{}timeline.extend(incremental)}
+            \PY{c+c1}{\PYZsh{}lis=user\PYZus{}timeline[\PYZhy{}1][\PYZsq{}id\PYZsq{}]\PYZhy{}1}
+            \PY{c+c1}{\PYZsh{}time.sleep(90) \PYZsh{}\PYZsh{} 90 second rest between api calls. The API allows 15 calls per 15 minutes so this is conservative}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{val} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{user\PYZus{}timeline}\PY{p}{)}\PY{p}{:}
+            \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{user\PYZus{}screen\PYZus{}name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{=}\PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{user}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{screen\PYZus{}name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+            \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{user\PYZus{}followers\PYZus{}count}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{=}\PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{user}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{followers\PYZus{}count}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+            \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{user\PYZus{}id}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{=}\PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{user}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{id}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+            \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{user\PYZus{}created\PYZus{}at}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{=}\PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{user}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{created\PYZus{}at}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+            \PY{k}{if} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{retweeted\PYZus{}status}\PY{l+s+s1}{\PYZsq{}} \PY{o+ow}{in} \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rt\PYZus{}count}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{retweeted\PYZus{}status}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{retweet\PYZus{}count}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+                \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{qt\PYZus{}id}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{retweeted\PYZus{}status}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{id}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+                \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rt\PYZus{}created}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{retweeted\PYZus{}status}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{created\PYZus{}at}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+                \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rt\PYZus{}user\PYZus{}screenname}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{retweeted\PYZus{}status}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{user}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+                \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rt\PYZus{}user\PYZus{}id}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{retweeted\PYZus{}status}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{user}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{id}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+                \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rt\PYZus{}user\PYZus{}followers}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{retweeted\PYZus{}status}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{user}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{followers\PYZus{}count}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+                \PY{k}{del} \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{retweeted\PYZus{}status}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+            \PY{k}{if} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{quoted\PYZus{}status}\PY{l+s+s1}{\PYZsq{}} \PY{o+ow}{in} \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{qt\PYZus{}created}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{quoted\PYZus{}status}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{created\PYZus{}at}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+                \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{qt\PYZus{}id}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{quoted\PYZus{}status}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{id}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+                \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{qt\PYZus{}text}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{quoted\PYZus{}status}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{text}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+                \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{qt\PYZus{}user\PYZus{}screenname}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{quoted\PYZus{}status}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{user}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+                \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{qt\PYZus{}user\PYZus{}id}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{quoted\PYZus{}status}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{user}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{id}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+                \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{qt\PYZus{}user\PYZus{}followers}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{quoted\PYZus{}status}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{user}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{followers\PYZus{}count}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+                \PY{k}{del} \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{quoted\PYZus{}status}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+            \PY{k}{if} \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{entities}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{urls}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{:} \PY{c+c1}{\PYZsh{}list}
+                \PY{k}{for} \PY{n}{j}\PY{p}{,} \PY{n}{val} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{entities}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{urls}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{urlj}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{url\PYZus{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{+}\PY{n+nb}{str}\PY{p}{(}\PY{n}{j}\PY{p}{)}
+                    \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{n}{urlj}\PY{p}{]}\PY{o}{=}\PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{entities}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{urls}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{expanded\PYZus{}url}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+            \PY{k}{if} \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{entities}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{user\PYZus{}mentions}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{:} \PY{c+c1}{\PYZsh{}list}
+                \PY{k}{for} \PY{n}{j}\PY{p}{,} \PY{n}{val} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{entities}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{user\PYZus{}mentions}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{mentionj}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{mention\PYZus{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{+}\PY{n+nb}{str}\PY{p}{(}\PY{n}{j}\PY{p}{)}
+                    \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{n}{mentionj}\PY{p}{]} \PY{o}{=} \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{entities}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{user\PYZus{}mentions}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{screen\PYZus{}name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+            \PY{k}{if} \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{entities}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{hashtags}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{:} \PY{c+c1}{\PYZsh{}list}
+                \PY{k}{for} \PY{n}{j}\PY{p}{,} \PY{n}{val} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{entities}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{hashtags}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{hashtagj}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{hashtag\PYZus{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{+}\PY{n+nb}{str}\PY{p}{(}\PY{n}{j}\PY{p}{)}
+                    \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{n}{hashtagj}\PY{p}{]} \PY{o}{=} \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{entities}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{hashtags}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{text}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+            \PY{k}{if} \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{coordinates}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o+ow}{is} \PY{o+ow}{not} \PY{k+kc}{None}\PY{p}{:}  \PY{c+c1}{\PYZsh{}NoneType or Dict}
+                \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{coord\PYZus{}long}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{coordinates}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{coordinates}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+                \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{coord\PYZus{}lat}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{coordinates}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{coordinates}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+            \PY{k}{del} \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{coordinates}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+            \PY{k}{del} \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{user}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+            \PY{k}{del} \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{entities}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+            \PY{k}{if} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{place}\PY{l+s+s1}{\PYZsq{}} \PY{o+ow}{in} \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}\PY{p}{:}  \PY{c+c1}{\PYZsh{}NoneType or Dict}
+                \PY{k}{del} \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{place}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+            \PY{k}{if} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{extended\PYZus{}entities}\PY{l+s+s1}{\PYZsq{}} \PY{o+ow}{in} \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                \PY{k}{del} \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{extended\PYZus{}entities}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+            \PY{k}{if} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{geo}\PY{l+s+s1}{\PYZsq{}} \PY{o+ow}{in} \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                \PY{k}{del} \PY{n}{user\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{geo}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{n}{today} \PY{o}{=} \PY{n}{datetime}\PY{o}{.}\PY{n}{now}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{strftime}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{Y\PYZhy{}}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{m\PYZhy{}}\PY{l+s+si}{\PYZpc{}d}\PY{l+s+s2}{ }\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{H:}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{M:}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{S}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{today}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+2016-09-24 21:57:38
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{n}{HillaryClintondf} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{user\PYZus{}timeline}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{}print(dftrump) original dataframe }
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{n}{today} \PY{o}{=} \PY{n}{datetime}\PY{o}{.}\PY{n}{now}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{strftime}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{Y\PYZhy{}}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{m\PYZhy{}}\PY{l+s+si}{\PYZpc{}d}\PY{l+s+s2}{ }\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{H:}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{M:}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{S}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{today}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{}dfHillaryClinton[\PYZsq{}test\PYZsq{}] = pd.Series([today for x in range(len(dftrump.index))], index=dftrump.index)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+2016-09-24 21:57:39
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{c+c1}{\PYZsh{}initial creation of dataframe}
+         \PY{c+c1}{\PYZsh{}trumpdf = pd.DataFrame(user\PYZus{}timeline)}
+         \PY{c+c1}{\PYZsh{}convert created date in datetime format}
+         \PY{n}{HillaryClintondf}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{created\PYZus{}at}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{to\PYZus{}datetime}\PY{p}{(}\PY{n}{HillaryClintondf}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{created\PYZus{}at}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{n}{HillaryClintondf}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}14}]:}   contributors          created\_at  favorite\_count favorited hashtag\_0  \textbackslash{}
+         0         None 2016-09-24 23:49:22            4602     False       NaN   
+         1         None 2016-09-24 22:58:12            3031     False       NaN   
+         2         None 2016-09-24 21:55:59            5303     False       NaN   
+         3         None 2016-09-24 21:05:47            4882     False       NaN   
+         4         None 2016-09-24 19:41:25            5632     False       NaN   
+         
+                            id              id\_str in\_reply\_to\_screen\_name  \textbackslash{}
+         0  779830115643617280  779830115643617280                    None   
+         1  779817238346002432  779817238346002432                    None   
+         2  779801578723217408  779801578723217408                    None   
+         3  779788945953591296  779788945953591296                    None   
+         4  779767715040989184  779767715040989184                    None   
+         
+            in\_reply\_to\_status\_id in\_reply\_to\_status\_id\_str        {\ldots}         \textbackslash{}
+         0                    NaN                      None        {\ldots}          
+         1                    NaN                      None        {\ldots}          
+         2                    NaN                      None        {\ldots}          
+         3                    NaN                      None        {\ldots}          
+         4                    NaN                      None        {\ldots}          
+         
+            retweeted                                             source  \textbackslash{}
+         0      False  <a href="https://about.twitter.com/products/tw{\ldots}   
+         1      False  <a href="https://about.twitter.com/products/tw{\ldots}   
+         2      False  <a href="https://about.twitter.com/products/tw{\ldots}   
+         3      False  <a href="https://about.twitter.com/products/tw{\ldots}   
+         4      False  <a href="https://about.twitter.com/products/tw{\ldots}   
+         
+                                                         text truncated  \textbackslash{}
+         0  The new @NMAAHC is an overdue tribute to Afric{\ldots}     False   
+         1  "Our choice, Hillary Clinton, has a record of {\ldots}      True   
+         2  "I thought, this woman—I want to ride with her{\ldots}     False   
+         3  Hillary's been fighting for women and girls he{\ldots}     False   
+         4  "A lifetime’s commitment to solving problems i{\ldots}     False   
+         
+                                                        url\_0 url\_1  \textbackslash{}
+         0                                                NaN   NaN   
+         1  https://twitter.com/i/web/status/7798172383460{\ldots}   NaN   
+         2                                                NaN   NaN   
+         3                              http://hrc.io/2d9vSky   NaN   
+         4                             http://nyti.ms/2cVyJ2o   NaN   
+         
+                           user\_created\_at  user\_followers\_count     user\_id  \textbackslash{}
+         0  Tue Apr 09 18:04:35 +0000 2013               8951480  1339835893   
+         1  Tue Apr 09 18:04:35 +0000 2013               8951480  1339835893   
+         2  Tue Apr 09 18:04:35 +0000 2013               8951480  1339835893   
+         3  Tue Apr 09 18:04:35 +0000 2013               8951480  1339835893   
+         4  Tue Apr 09 18:04:35 +0000 2013               8951480  1339835893   
+         
+            user\_screen\_name  
+         0    HillaryClinton  
+         1    HillaryClinton  
+         2    HillaryClinton  
+         3    HillaryClinton  
+         4    HillaryClinton  
+         
+         [5 rows x 35 columns]
+\end{Verbatim}
+        
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{n+nb}{list}\PY{p}{(}\PY{n}{HillaryClintondf}\PY{o}{.}\PY{n}{columns}\PY{o}{.}\PY{n}{values}\PY{p}{)}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}15}]:} ['contributors',
+          'created\_at',
+          'favorite\_count',
+          'favorited',
+          'hashtag\_0',
+          'id',
+          'id\_str',
+          'in\_reply\_to\_screen\_name',
+          'in\_reply\_to\_status\_id',
+          'in\_reply\_to\_status\_id\_str',
+          'in\_reply\_to\_user\_id',
+          'in\_reply\_to\_user\_id\_str',
+          'is\_quote\_status',
+          'lang',
+          'mention\_0',
+          'possibly\_sensitive',
+          'qt\_created',
+          'qt\_id',
+          'qt\_text',
+          'qt\_user\_followers',
+          'qt\_user\_id',
+          'qt\_user\_screenname',
+          'quoted\_status\_id',
+          'quoted\_status\_id\_str',
+          'retweet\_count',
+          'retweeted',
+          'source',
+          'text',
+          'truncated',
+          'url\_0',
+          'url\_1',
+          'user\_created\_at',
+          'user\_followers\_count',
+          'user\_id',
+          'user\_screen\_name']
+\end{Verbatim}
+        
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{c+c1}{\PYZsh{}get structure of dataframe: row \PYZam{} col}
+         
+         \PY{n}{HillaryClintondf}\PY{o}{.}\PY{n}{shape}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}16}]:} (166, 35)
+\end{Verbatim}
+        
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{7}\PY{p}{)}\PY{p}{:}
+             \PY{n}{temp\PYZus{}timeline} \PY{o}{=} \PY{n}{twitter}\PY{o}{.}\PY{n}{get\PYZus{}user\PYZus{}timeline}\PY{p}{(}\PY{n}{screen\PYZus{}name}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{HillaryClinton}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{count}\PY{o}{=}\PY{l+m+mi}{1000}\PY{p}{,} \PY{n}{include\PYZus{}rts}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}18}]:} \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{val} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{temp\PYZus{}timeline}\PY{p}{)}\PY{p}{:}
+             \PY{n}{temp\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{current\PYZus{}time}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{datetime}\PY{o}{.}\PY{n}{now}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{strftime}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{Y\PYZhy{}}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{m\PYZhy{}}\PY{l+s+si}{\PYZpc{}d}\PY{l+s+s2}{ }\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{H:}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{M:}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{S}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+             \PY{n}{temp\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{user\PYZus{}screen\PYZus{}name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{=}\PY{n}{temp\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{user}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{screen\PYZus{}name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+             \PY{n}{temp\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{user\PYZus{}followers\PYZus{}count}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{=}\PY{n}{temp\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{user}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{followers\PYZus{}count}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+             \PY{k}{if} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{retweeted\PYZus{}status}\PY{l+s+s1}{\PYZsq{}} \PY{o+ow}{in} \PY{n}{temp\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{temp\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rt\PYZus{}count}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{temp\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{retweeted\PYZus{}status}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{retweet\PYZus{}count}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+                 \PY{n}{temp\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rt\PYZus{}created}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{temp\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{retweeted\PYZus{}status}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{created\PYZus{}at}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+                 \PY{n}{temp\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rt\PYZus{}user\PYZus{}id}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{temp\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{retweeted\PYZus{}status}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{user}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{id}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+                 \PY{n}{temp\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rt\PYZus{}user\PYZus{}followers}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{temp\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{retweeted\PYZus{}status}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{user}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{followers\PYZus{}count}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+                 \PY{k}{del} \PY{n}{temp\PYZus{}timeline}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{retweeted\PYZus{}status}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}     
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}19}]:} \PY{n}{df3} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{temp\PYZus{}timeline}\PY{p}{)}
+         \PY{n}{df3}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{created\PYZus{}at}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{to\PYZus{}datetime}\PY{p}{(}\PY{n}{df3}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{created\PYZus{}at}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}20}]:} \PY{n}{df3}\PY{o}{.}\PY{n}{shape}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}20}]:} (166, 31)
+\end{Verbatim}
+        
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}21}]:} \PY{n}{df3}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}21}]:}   contributors coordinates          created\_at         current\_time  \textbackslash{}
+         0         None        None 2016-09-24 23:49:22  2016-09-24 21:57:53   
+         1         None        None 2016-09-24 22:58:12  2016-09-24 21:57:53   
+         2         None        None 2016-09-24 21:55:59  2016-09-24 21:57:53   
+         3         None        None 2016-09-24 21:05:47  2016-09-24 21:57:53   
+         4         None        None 2016-09-24 19:41:25  2016-09-24 21:57:53   
+         
+                                                     entities  \textbackslash{}
+         0  \{'hashtags': [], 'user\_mentions': [\{'name': 'S{\ldots}   
+         1  \{'hashtags': [], 'user\_mentions': [\{'name': 'T{\ldots}   
+         2  \{'media': [\{'source\_status\_id': 77936203983988{\ldots}   
+         3  \{'hashtags': [], 'user\_mentions': [], 'symbols{\ldots}   
+         4  \{'hashtags': [], 'user\_mentions': [\{'name': 'T{\ldots}   
+         
+                                            extended\_entities  favorite\_count  \textbackslash{}
+         0                                                NaN            4647   
+         1                                                NaN            3049   
+         2  \{'media': [\{'source\_status\_id': 77936203983988{\ldots}            5322   
+         3                                                NaN            4893   
+         4                                                NaN            5646   
+         
+           favorited   geo                  id       {\ldots}        quoted\_status\_id  \textbackslash{}
+         0     False  None  779830115643617280       {\ldots}                     NaN   
+         1     False  None  779817238346002432       {\ldots}                     NaN   
+         2     False  None  779801578723217408       {\ldots}                     NaN   
+         3     False  None  779788945953591296       {\ldots}                     NaN   
+         4     False  None  779767715040989184       {\ldots}                     NaN   
+         
+           quoted\_status\_id\_str  retweet\_count retweeted  \textbackslash{}
+         0                  NaN           1398     False   
+         1                  NaN           1160     False   
+         2                  NaN           2238     False   
+         3                  NaN           1952     False   
+         4                  NaN           2409     False   
+         
+                                                       source  \textbackslash{}
+         0  <a href="https://about.twitter.com/products/tw{\ldots}   
+         1  <a href="https://about.twitter.com/products/tw{\ldots}   
+         2  <a href="https://about.twitter.com/products/tw{\ldots}   
+         3  <a href="https://about.twitter.com/products/tw{\ldots}   
+         4  <a href="https://about.twitter.com/products/tw{\ldots}   
+         
+                                                         text truncated  \textbackslash{}
+         0  The new @NMAAHC is an overdue tribute to Afric{\ldots}     False   
+         1  "Our choice, Hillary Clinton, has a record of {\ldots}      True   
+         2  "I thought, this woman—I want to ride with her{\ldots}     False   
+         3  Hillary's been fighting for women and girls he{\ldots}     False   
+         4  "A lifetime’s commitment to solving problems i{\ldots}     False   
+         
+                                                         user user\_followers\_count  \textbackslash{}
+         0  \{'is\_translator': False, 'profile\_background\_i{\ldots}              8951497   
+         1  \{'is\_translator': False, 'profile\_background\_i{\ldots}              8951497   
+         2  \{'is\_translator': False, 'profile\_background\_i{\ldots}              8951497   
+         3  \{'is\_translator': False, 'profile\_background\_i{\ldots}              8951497   
+         4  \{'is\_translator': False, 'profile\_background\_i{\ldots}              8951497   
+         
+           user\_screen\_name  
+         0   HillaryClinton  
+         1   HillaryClinton  
+         2   HillaryClinton  
+         3   HillaryClinton  
+         4   HillaryClinton  
+         
+         [5 rows x 31 columns]
+\end{Verbatim}
+        
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}22}]:} \PY{n+nb}{list}\PY{p}{(}\PY{n}{df3}\PY{o}{.}\PY{n}{columns}\PY{o}{.}\PY{n}{values}\PY{p}{)}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}22}]:} ['contributors',
+          'coordinates',
+          'created\_at',
+          'current\_time',
+          'entities',
+          'extended\_entities',
+          'favorite\_count',
+          'favorited',
+          'geo',
+          'id',
+          'id\_str',
+          'in\_reply\_to\_screen\_name',
+          'in\_reply\_to\_status\_id',
+          'in\_reply\_to\_status\_id\_str',
+          'in\_reply\_to\_user\_id',
+          'in\_reply\_to\_user\_id\_str',
+          'is\_quote\_status',
+          'lang',
+          'place',
+          'possibly\_sensitive',
+          'quoted\_status',
+          'quoted\_status\_id',
+          'quoted\_status\_id\_str',
+          'retweet\_count',
+          'retweeted',
+          'source',
+          'text',
+          'truncated',
+          'user',
+          'user\_followers\_count',
+          'user\_screen\_name']
+\end{Verbatim}
+        
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}24}]:} \PY{c+c1}{\PYZsh{}create create dataframe with the required fields for analysis.}
+         \PY{c+c1}{\PYZsh{}trumpdf is the primary/original tweeter request, we create the df1}
+         \PY{n}{df1} \PY{o}{=} \PY{n}{HillaryClintondf}\PY{p}{[}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{created\PYZus{}at}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{favorite\PYZus{}count}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{id}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lang}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{retweet\PYZus{}count}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{user\PYZus{}followers\PYZus{}count}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{user\PYZus{}screen\PYZus{}name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{text}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}25}]:} \PY{n}{df1}\PY{o}{.}\PY{n}{shape}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}25}]:} (166, 8)
+\end{Verbatim}
+        
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}26}]:} \PY{c+c1}{\PYZsh{}get the index/column list }
+         \PY{n+nb}{list}\PY{p}{(}\PY{n}{df1}\PY{o}{.}\PY{n}{columns}\PY{o}{.}\PY{n}{values}\PY{p}{)}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}26}]:} ['created\_at',
+          'favorite\_count',
+          'id',
+          'lang',
+          'retweet\_count',
+          'user\_followers\_count',
+          'user\_screen\_name',
+          'text']
+\end{Verbatim}
+        
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}27}]:} \PY{c+c1}{\PYZsh{}create second dataframe witht he required fields for join and create the realDonaldTrump, here is the df3 }
+         \PY{c+c1}{\PYZsh{}so we create df2}
+         
+         \PY{n}{df2} \PY{o}{=} \PY{n}{df3}\PY{p}{[}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{current\PYZus{}time}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{favorite\PYZus{}count}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{id}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{retweet\PYZus{}count}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{user\PYZus{}followers\PYZus{}count}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{user\PYZus{}screen\PYZus{}name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}28}]:} \PY{n+nb}{list}\PY{p}{(}\PY{n}{df2}\PY{o}{.}\PY{n}{columns}\PY{o}{.}\PY{n}{values}\PY{p}{)}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}28}]:} ['current\_time',
+          'favorite\_count',
+          'id',
+          'retweet\_count',
+          'user\_followers\_count',
+          'user\_screen\_name']
+\end{Verbatim}
+        
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}29}]:} \PY{n}{df2}\PY{o}{.}\PY{n}{shape}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}29}]:} (166, 6)
+\end{Verbatim}
+        
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}30}]:} \PY{n}{realHillaryClinton} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{merge}\PY{p}{(}\PY{n}{df1}\PY{p}{,} \PY{n}{df2}\PY{p}{,} \PY{n}{how}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{inner}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{on}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{id}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{user\PYZus{}screen\PYZus{}name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{left\PYZus{}index}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{sort}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{copy}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}32}]:} \PY{c+c1}{\PYZsh{}create final dataframe with required fields for analysis. using inner join in order to find the one already in the dataframe.}
+         \PY{c+c1}{\PYZsh{}realHillaryClinton = pd.merge(df1, df2, how=\PYZsq{}inner\PYZsq{}, on=[\PYZsq{}key1\PYZsq{}, \PYZsq{}key2\PYZsq{}])}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}33}]:} \PY{n}{realHillaryClinton}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}33}]:}              created\_at  favorite\_count\_x                  id lang  \textbackslash{}
+         165 2016-09-16 13:58:03              1920  776782199832113152   en   
+         164 2016-09-16 13:58:45              1890  776782378375208960   en   
+         163 2016-09-16 13:59:10              2812  776782482352009216   en   
+         162 2016-09-16 14:00:39              2383  776782857993916416   en   
+         161 2016-09-16 14:01:46              1700  776783135447089152   en   
+         
+              retweet\_count\_x  user\_followers\_count\_x user\_screen\_name  \textbackslash{}
+         165              991                 8951480   HillaryClinton   
+         164              630                 8951480   HillaryClinton   
+         163             1390                 8951480   HillaryClinton   
+         162             1213                 8951480   HillaryClinton   
+         161              840                 8951480   HillaryClinton   
+         
+                                                           text         current\_time  \textbackslash{}
+         165  "We know who Donald is. For five years, he has{\ldots}  2016-09-24 21:57:53   
+         164  Just yesterday, Trump again refused to say wit{\ldots}  2016-09-24 21:57:53   
+         163  Barack Obama was born in America, plain and si{\ldots}  2016-09-24 21:57:53   
+         162  Donald Trump is unfit to be president.\textbackslash{}nWe jus{\ldots}  2016-09-24 21:57:53   
+         161  "Donald Trump looks at a distinguished judge b{\ldots}  2016-09-24 21:57:53   
+         
+              favorite\_count\_y  retweet\_count\_y  user\_followers\_count\_y  
+         165              1920              991                 8951497  
+         164              1890              630                 8951497  
+         163              2812             1390                 8951497  
+         162              2383             1213                 8951497  
+         161              1700              840                 8951497  
+\end{Verbatim}
+        
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}34}]:} \PY{c+c1}{\PYZsh{}d = dict(screen\PYZus{}name = screen\PYZus{}name, Favorites = favorites\PYZus{}count, Retweets = retweets\PYZus{}count,Date = date, Text = text)}
+         
+         \PY{c+c1}{\PYZsh{}HillaryClinton = pd.DataFrame(\PYZob{}k : pd.Series(v) for k, v in  list(d.items())\PYZcb{})}
+         \PY{n}{status\PYZus{}texts} \PY{o}{=} \PY{n}{realHillaryClinton}\PY{p}{[}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{text}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{status\PYZus{}texts}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+                                                  text
+165  "We know who Donald is. For five years, he has{\ldots}
+164  Just yesterday, Trump again refused to say wit{\ldots}
+163  Barack Obama was born in America, plain and si{\ldots}
+162  Donald Trump is unfit to be president.\textbackslash{}nWe jus{\ldots}
+161  "Donald Trump looks at a distinguished judge b{\ldots}
+160  "He looks at a Gold Star family and sees them {\ldots}
+159  Donald Trump looks at women and decides how th{\ldots}
+158  “Let’s reject the cynicism, the bullying, and {\ldots}
+157  Let’s build a future where love trumps hate. h{\ldots}
+156                 What Trump just did is a disgrace.
+155  Expressing zero regret for years of pushing a {\ldots}
+154  Leading the birther movement is deplorable. At{\ldots}
+153  When Trump tries to deflect blame for denying {\ldots}
+152  Again, Trump turns his faults on others. Psych{\ldots}
+151  This shouldn't have to be said: You don’t just{\ldots}
+150  Trump has spent years peddling a racist conspi{\ldots}
+149  The birther lie is what turned Trump from an o{\ldots}
+148  Trump’s birtherism stems from the same innate {\ldots}
+147  What Trump should do: for once in his life, ow{\ldots}
+146  On National Prisoners of War Remembrance Day, {\ldots}
+145  .@FLOTUS is on the trail for Hillary. Tune in {\ldots}
+144  “I am thrilled to be here today to support the{\ldots}
+143  "When it comes to the qualifications we should{\ldots}
+142  "The presidency doesn’t change who you are. It{\ldots}
+141  "Hillary has the resilience it takes to do thi{\ldots}
+140  “We have an opportunity to elect one of the mo{\ldots}
+139  "Elections aren't just about who votes, but wh{\ldots}
+138  "Your decision will determine who sits in the {\ldots}
+137  “You’ve got to get yourself and everyone you k{\ldots}
+136  “The choice that you make on November 8 will d{\ldots}
+..                                                 {\ldots}
+29   "I think this is the most important election i{\ldots}
+28   "Donald Trump doesn't see people like me, he o{\ldots}
+27   Most people who are bullies grow out of it. \textbackslash{}n{\ldots}
+26   The man who could be your next president may b{\ldots}
+25   Very concerned about the outage in Puerto Rico{\ldots}
+24   Donald Trump's ties to Russia may conflict wit{\ldots}
+23   Let's make sure nobody who works full-time in {\ldots}
+22   "I really regret doing this." —Hillary on Betw{\ldots}
+21   "Vote." —@Lin\_Manuel https://t.co/tTgeqxNqYm h{\ldots}
+20   Our favorite moments from Hillary's appearance{\ldots}
+19   "He's 70 years old, and he's still a bully." —{\ldots}
+18   Is this the president we want for our daughter{\ldots}
+17   When Donald Trump speaks about women, our daug{\ldots}
+16   "She gives us hope for the future. She's our g{\ldots}
+15   Charlotte should release police video of the K{\ldots}
+14   Addiction is a disease—not a moral failing. We{\ldots}
+13   "Hillary Clinton would make a sober, smart and{\ldots}
+12   "Donald Trump committed perjury. Or he looked {\ldots}
+11   "I was just blown away by this 9-year-old girl{\ldots}
+10   Republicans are once again turning their backs{\ldots}
+9    If the young women of this country have Donald{\ldots}
+8    "Hillary Clinton is one of the best prepared c{\ldots}
+7    Donald Trump doesn't see people like Anastasia{\ldots}
+6    RT if you believe that \#LoveTrumpsHate\textbackslash{}n\textbackslash{}nThen{\ldots}
+5    We know all too well who Donald Trump is. Let'{\ldots}
+4    "A lifetime’s commitment to solving problems i{\ldots}
+3    Hillary's been fighting for women and girls he{\ldots}
+2    "I thought, this woman—I want to ride with her{\ldots}
+1    "Our choice, Hillary Clinton, has a record of {\ldots}
+0    The new @NMAAHC is an overdue tribute to Afric{\ldots}
+
+[166 rows x 1 columns]
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}35}]:} \PY{c+c1}{\PYZsh{}count words in each tweet, we can also lower all the words/characters to by using .lower(),}
+         \PY{n}{words\PYZus{}HillaryClinton} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ }\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{n}{realHillaryClinton}\PY{o}{.}\PY{n}{text}\PY{p}{)}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n}{punctuation} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{n}{string}\PY{o}{.}\PY{n}{punctuation}\PY{p}{)}
+         \PY{n}{stop} \PY{o}{=} \PY{n}{stopwords}\PY{o}{.}\PY{n}{words}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{english}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{o}{+} \PY{n}{punctuation} \PY{o}{+} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rt}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{via}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}36}]:} \PY{c+c1}{\PYZsh{}implementation of stop words using nltk library for language processing}
+         \PY{n}{terms\PYZus{}stop} \PY{o}{=} \PY{p}{[}\PY{n}{term} \PY{k}{for} \PY{n}{term} \PY{o+ow}{in} \PY{n}{words\PYZus{}HillaryClinton} \PY{k}{if} \PY{n}{term} \PY{o+ow}{not} \PY{o+ow}{in} \PY{n}{stop}\PY{p}{]}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}37}]:} \PY{n+nb}{print}\PY{p}{(}\PY{n}{terms\PYZus{}stop}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+['"We', 'know', 'Donald', 'is.', 'For', 'five', 'years,', 'led', 'birther', 'movement', 'de-legitimize', 'first', 'black', 'president.”', '—Hillary', 'Just', 'yesterday,', 'Trump', 'refused', 'say', 'words', 'president', 'born', 'United', 'States.', 'Barack', 'Obama', 'born', 'America,', 'plain', 'simple.', 'Donald', 'Trump', 'owes', 'American', 'people', 'apology.', 'Donald', 'Trump', 'unfit', 'president.', 'We', 'can’t', 'accept', 'this.', 'We’ve', 'got', 'stand', 'this.', 'If', 'don’t,', 'won’t', 'stop.', '"Donald', 'Trump', 'looks', 'distinguished', 'judge', 'born', 'Indiana,', 'sees', 'Mexican,', 'American.”', '—Hillary', '"He', 'looks', 'Gold', 'Star', 'family', 'sees', 'Muslims,', 'patriotic', 'Americans.”', '—Hillary', 'Trump', 'Donald', 'Trump', 'looks', 'women', 'decides', 'looks', 'rate', 'scale', 'one', '10.', '“Let’s', 'reject', 'cynicism,', 'bullying,', 'divisive', 'rhetoric', 'opponent', 'using', 'try', 'make', 'us', 'afraid', 'other.”', 'Let’s', 'build', 'future', 'love', 'trumps', 'hate.', 'https://t.co/tTgeqxNqYm', 'What', 'Trump', 'disgrace.', 'Expressing', 'zero', 'regret', 'years', 'pushing', 'racist', 'conspiracy', 'theory,', 'Trump', 'appointed', 'judge', '\&amp;', 'jury', "@POTUS's", 'citizenship.', 'Leading', 'birther', 'movement', 'deplorable.', 'Attempting', 'say', '"did', 'great', 'service"', 'president', 'Trump', 'attacked', 'asinine.', 'When', 'Trump', 'tries', 'deflect', 'blame', 'denying', '@POTUS', 'born', 'America,', 'lying.', 'https://t.co/lje3lKrZQy', 'https://t.co/yq9IWnvXUc', 'Again,', 'Trump', 'turns', 'faults', 'others.', 'Psychologists', 'call', '"projecting."', 'Kids', 'call', '"I\textbackslash{}'m', 'rubber,', "you're", 'glue."', 'https://t.co/lKDDD0wwsn', 'This', "shouldn't", 'said:', 'You', 'don’t', 'get', 'say', 'someone', 'else', 'worst', 'things', 'you’ve', 'done.', 'It', 'doesn’t', 'work.', 'No', 'one', 'buys', 'it.', 'Trump', 'spent', 'years', 'peddling', 'racist', 'conspiracy', 'aimed', 'undermining', 'first', 'African', 'American', 'president.', 'He', "can't", 'take', 'back.', 'The', 'birther', 'lie', 'turned', 'Trump', 'ordinary', 'reality', 'TV', 'star', 'political', 'figure.', 'That', 'origin', 'story', "can't", 'unwritten.', 'Trump’s', 'birtherism', 'stems', 'innate', 'beliefs', 'led', 'discriminating', 'black', 'tenants', 'early', 'career.', "Can't", 'undone.', 'What', 'Trump', 'do:', 'life,', 'mistakes.', 'Apologize', 'President,', 'American', 'people.', 'On', 'National', 'Prisoners', 'War', 'Remembrance', 'Day,', 'POW', 'shares', 'means', 'Trump', 'insults', 'veterans.', 'https://t.co/0dVB5B0gbC', '.@FLOTUS', 'trail', 'Hillary.', 'Tune', 'watch', 'live', 'Virginia:', 'https://t.co/PhnJJoDmPD', '“I', 'thrilled', 'today', 'support', 'next', 'president', '\&amp;', 'vice', 'president', 'United', 'States,', 'Hillary', 'Clinton', '\&amp;', 'Tim', 'Kaine!”', '—@FLOTUS', '"When', 'comes', 'qualifications', 'demand', 'president{\ldots}we', 'need', 'someone', 'who’s', 'going', 'take', 'job', 'seriously.”', '—@FLOTUS', '"The', 'presidency', 'doesn’t', 'change', 'are.', 'It', 'reveals', 'are.', 'And', 'thing', 'true', 'presidential', 'campaign."', '—@FLOTUS', '"Hillary', 'resilience', 'takes', 'job,', 'see', 'gets', 'knocked', 'down…she', 'gets', 'right', 'back', 'up.”', '—@FLOTUS', '“We', 'opportunity', 'elect', 'one', 'qualified', 'people', 'ever', 'endeavored', 'become', 'president.”', '—@FLOTUS', 'Hillary', '"Elections', "aren't", 'votes,', "doesn't", 'vote."', '—@FLOTUS:', 'https://t.co/tTgeqxNqYm', '"Your', 'decision', 'determine', 'sits', 'Oval', 'Office', 'Barack', 'Obama.”', '—@FLOTUS', '“You’ve', 'got', 'get', 'everyone', 'know', 'registered', 'vote', 'today.”', '—@FLOTUS:', 'https://t.co/tTgeqxNqYm', '“The', 'choice', 'make', 'November', '8', 'determine', 'whether', 'afford', 'college', 'tuition.”', '—@FLOTUS:', 'https://t.co/tTgeqxNqYm', '“On', 'November', '8,', 'decide', 'whether', 'president', 'believes', 'science', 'fight', 'climate', 'change—or', 'not.”', '—@FLOTUS', '"We', 'deserve', 'president…who', 'believes', 'us', 'part', 'American', 'story,', 'we’re', 'always', 'stronger', 'together.”', '—@FLOTUS', 'Donald', 'Trump', 'spent', 'five', 'years', 'lying', "@POTUS's", 'citizenship.', 'He', 'can’t', 'take', 'back.', 'https://t.co/HeafYwy0Fp', 'Donald', 'Trump', 'spent', 'years', 'peddling', 'lies', 'President', 'Obama.', 'And', "didn't", 'stop', 'today.', 'https://t.co/KzgPQgPjxK', "Trump's", 'habit', 'projecting', 'actions', 'onto', 'someone', 'else', '6-year-olds', 'call', '"I', 'know', 'are,', 'I?"', 'https://t.co/FIhZYLmy1l', '126', 'things', 'Donald', 'Trump', 'said', 'done', 'disqualify', 'candidacy:', 'https://t.co/h4qUNNnTOf', 'The', 'brave', 'men', 'women', 'served', 'country', 'deserve', 'better', 'Donald', 'Trump.', 'https://t.co/SmLmTrVhOr', "It's", 'great', 'back', 'campaign', 'trail.', 'https://t.co/vm1KX2uOXt', 'It’s', 'time', 'Donald', 'Trump', 'held', 'standard', 'disclosure', 'major', 'party', 'nominee.', 'https://t.co/UP93LCzURv', '9', 'times', 'Donald', 'Trump', 'accused', 'Hillary', 'terrible', 'things', 'he,', 'himself,', 'actually', 'did:', 'https://t.co/DXlybx7oA5', 'Take', '@FLOTUS:', 'This', 'election', 'important', 'sit', 'out.', 'Register', 'vote:', 'https://t.co/tTgeqy51PU', 'https://t.co/NblU3Tth7T', "Hillary's", 'childhood', 'pen', 'pal,', 'graduation', 'cheering', 'section,', 'friend.', 'Meet', 'Aleatha:', 'https://t.co/f4YzTBmIdl', '"We’re', 'siding', 'students', 'every', 'American', 'seeking', 'affordable', 'college', 'degree."', '—@TimKaine', 'https://t.co/qa9qO4AFxW', 'Any', 'examples', 'proves', 'Donald', 'Trump', 'unfit', 'president.', 'https://t.co/3mQgqZ7b8V', "Let's", 'clear:', 'Nothing—including', 'audit—is', 'preventing', 'Trump', 'releasing', 'tax', 'returns.', 'https://t.co/mpGiRIaPgD', 'Trump', 'went', 'Flint', 'draw', 'attention', "city's", 'lead', 'poisoning', 'crisis—but', 'made', 'spectacle', 'himself.', 'https://t.co/Dw4KoVgrQ3', '"I', 'want', 'know', 'I', 'see', 'you,', 'I’m', 'you."', '—Hillary', 'Latino', 'community', '@CHCI', 'https://t.co/t2F93Ml785', 'So', 'exactly', 'Donald', 'Trump', 'build', 'bank', 'account?', 'On', 'backs', 'American', 'taxpayers:', 'https://t.co/4uBuIljQML', 'This', 'year,', 'Janelle', 'beat', 'breast', 'cancer', 'support', 'family,', 'friends,', 'presidential', 'candidate.', 'https://t.co/vmavvobLcs', 'Presidential.', 'https://t.co/tlfpcbVqkT', 'Tune', 'watch', 'Hillary', 'speak', '@OfficialCBC:', 'https://t.co/NJuB7JkyDL', '"I’m', 'going', 'close', 'campaign', 'way', 'I', 'began', 'career…focused', 'opportunities', 'children', 'fairness', 'families."', '—Hillary', 'We', 'need', 'ideas,', 'insults.', 'Plans,', 'paranoia.', 'We', 'can’t', 'let', "@POTUS's", 'legacy', 'fall', 'hands', 'someone', 'doesn’t', 'understand', 'that.', 'As', '@FLOTUS', 'said,', 'election', 'kind', 'country', 'want', 'want', 'leave', 'behind', 'future', 'generations.', 'If', 'want', 'go', 'college', 'saddled', 'student', 'debt,', "you'll", 'want', 'read', '@TimKaine', 'say:', 'https://t.co/qa9qO4AFxW', 'In', 'normal', 'election,', '126', 'things', 'would', 'disqualify', 'Trump', 'becoming', 'president:', 'https://t.co/VeDJknt4JH', '“We', 'face', 'world', 'commit', 'turning', 'be.”', '—Hillary', 'https://t.co/nEB4qSm2YX', 'So', 'exactly', 'Donald', 'Trump', 'hiding', 'voters?', 'Pretty', 'much', 'everything.', 'https://t.co/RGUqGN4I7i', '"Read', 'history.', 'It', 'matters.', "We've", 'got', 'get', 'people', 'vote."', '—@POTUS:', 'https://t.co/tTgeqy51PU', 'https://t.co/GyveEjARku', 'Joel', 'Sollender,', 'WWII', 'veteran', 'POW,', 'means', 'hears', 'Trump', 'insult', 'vets.', 'https://t.co/3ZIezeRTl9', '"I', 'strongly', 'condemn', 'apparent', 'terrorist', 'attacks', 'Minnesota,', 'New', 'Jersey,', 'New', 'York."', 'https://t.co/NSy3fkcu1c', 'It', "wasn't", 'long', 'ago', 'women', 'faced', 'took', 'barriers', 'seem', 'ridiculous', 'now.', 'https://t.co/nuG8Gqmzt1', 'https://t.co/XwvEuxsrOV', 'Next', 'week,', 'Hillary', 'walk', 'stage', 'first', 'presidential', 'debate.', 'Chip', 'chance', 'there:', 'https://t.co/mHGncsXG6y', '"Progress', 'ballot.', 'Tolerance', 'ballot.', 'Democracy', 'ballot.', 'Justice', 'ballot."', 'https://t.co/Mmyqestken', 'Congratulations', 'Emmy,', 'Kate!', 'Big', 'fan', 'yours,', 'too.', 'https://t.co/w00QO1GwyH', 'Grateful', 'brave', 'men', 'women', 'serving', '@USAirForce', 'families.', 'Happy', 'birthday,', 'USAF!', 'https://t.co/xYebpm9NaN', '"We', 'got', 'everything', 'make', 'sure', 'Hillary', 'Clinton', 'elected', 'president."', '—@BernieSanders', 'https://t.co/t1uxcoVJT5', '"Like', 'Americans,', 'thoughts', 'wounded,', 'families,', '\&amp;', 'first', 'responders”', '—Hillary', 'weekend’s', 'attacks', '"Let', 'us', 'vigilant,', 'afraid…we', 'choose', 'resolve,', 'fear.', 'We', 'turn', 'undermine', 'other.”', '—Hillary', '“I’m', 'candidate', 'race', 'who’s', 'part', 'hard', 'decisions', 'take', 'terrorists', 'battlefield.', '—Hillary', '“What', 'I’ve', 'laid', 'path', 'forward', 'keep', 'us', 'safer{\ldots}and', 'go', 'terrorists', 'finally', 'destroy', 'them"', 'https://t.co/tWWEMx0T9s', 'Our', 'next', 'president', 'needs', 'right', 'temperament', 'meet', 'challenges', 'face.', 'https://t.co/XMDZPtLNMB', '“This', 'threat', 'real,', 'resolve.', 'Americans', 'cower.', 'We', 'prevail.”', '—Hillary', 'https://t.co/eADlIG9aQL', '“I’m', 'Hillary', 'Clinton', 'I’ve', 'always', 'approved', 'message.”', 'https://t.co/GgDeBBfoUm', '50', 'days', 'go.', "Don't", 'miss', 'Hillary', 'live', '@TempleUniv:', 'https://t.co/qg6J7SXrr0', '“Your', 'generation', 'inclusive,', 'progressive,', 'entrepreneurial', 'we’ve', 'ever', 'seen.”', '—Hillary', 'students', '@TempleUniv', 'You', 'want', 'something', 'vote', 'for,', 'against:', 'Optimism,', 'resentment.', 'Answers,', 'anger.', 'Ideas,', 'insults.', 'Bridges,', 'walls.', 'This', 'election', 'isn’t', 'reality', 'TV', 'show.', 'It', 'shouldn’t', 'birth', 'certificates', 'name-calling', 'stunts', 'get', 'cable', 'news.', 'It’s', 'wrong', 'tear', 'down.', 'It’s', 'wrong', 'let', 'income', 'inequality', 'get', 'worse.', 'It’s', 'wrong', 'put', 'loose', 'cannon', 'charge.', 'We', 'build', 'cleaner,', 'resilient', 'electrical', 'grid', 'enough', 'renewable', 'energy', 'power', 'every', 'home', 'country.', 'If', 'work', 'hard,', 'able', 'find', 'good', 'job', 'pays', 'well', 'lets', 'love', 'make', 'mark', 'world.', 'College', 'tuition-free', 'working', 'families', 'debt-free', 'everyone:', 'https://t.co/lkOFcHI4Py', 'We', 'Republican', 'nominee', 'president', 'incites', 'hatred', 'violence', 'like', 'we’ve', 'never', 'seen', 'before.', 'When', 'Americans', 'get', 'knocked', 'down,', 'get', 'right', 'back', 'again.', 'We', 'refuse', 'quit—no', 'matter', 'what.', 'That’s', 'spirit', 'need', 'election.', 'Simply', 'caring', 'enough.', 'To', 'drive', 'real', 'progress,', 'change', 'hearts', 'laws.', 'https://t.co/oZIm2is1lX', 'In', 'democracy,', 'want', 'help', 'greatest', 'number', 'people,', 'push', 'reform', 'outside-in', 'inside-out.', "We're", 'facing', 'candidate', 'history', 'discrimination', 'businesses,', 'retweets', 'white', 'supremacists,', 'led', 'birther', 'movement.', 'We', 'stand', 'hate.', 'We', 'send', 'clear', 'message:', 'America', 'better', 'this.', 'America', 'better', 'Donald', 'Trump.', 'When', 'work', 'together,', 'trump', 'hate.', 'https://t.co/tTgeqxNqYm', '"The', 'lesson', 'passed', 'simple', 'powerful:', 'No', 'one', 'gets', 'life', 'alone."', '—Hillary', 'mom', 'https://t.co/gzNvfNPeNu', 'Find', 'much', "Hillary's", 'college', 'plan', 'save', 'you:', 'https://t.co/svkSUzhwYz', 'https://t.co/tmHf8m2CdX', 'Let’s', 'make', 'clear', 'love', 'trumps', 'hate—not', 'November,', 'always.', 'https://t.co/wDxspmxT9Q', 'Be', 'voter.', 'Check', 'registration', 'help', 'friends', '→', 'https://t.co/tTgeqxNqYm', 'https://t.co/yTAG2iT8WL', '"Everyone', 'wants', 'go', 'college', 'able', 'without', 'drowning', 'debt."', '—Hillary', 'https://t.co/wDxspmxT9Q', 'America', 'never', 'made', 'progress', 'thinking', 'one', 'person', 'alone', 'fix', 'problems.', 'https://t.co/mYba5FCBrb', 'Barack', 'Obama', 'said', 'progress', 'ballot', 'November.', 'This', 'economic', 'data', 'shows', 'he’s', 'right.', 'https://t.co/CIoKKKIxqz', 'Nobody', 'America', 'forgo', 'higher', 'education', "can't", 'afford', 'it.', 'https://t.co/DhSlyM6ILQ', '"You', 'want', 'give', 'good', 'send-off?', 'Go', 'vote.”', '—Barack', 'Obama:', 'https://t.co/tTgeqxNqYm', 'https://t.co/Jqf2jmx3D0', 'Catch', '@FallonTonight', '11:35pm', 'ET', 'see', 'letters', "Hillary's", 'biggest', 'fans.', 'https://t.co/muVNwgLSRs', '"The', 'voice', 'vote', 'greatest', 'voice', 'have."', '—@NyleDiMarco', 'https://t.co/tTgeqxNqYm', 'https://t.co/X3oqEoOYsU', 'Donald', 'Trump', 'using', 'foundation—funded', "people's", 'money—to', 'settle', 'lawsuits.', 'https://t.co/2LRtZBls9A', 'Another', 'unarmed', 'Black', 'man', 'shot', 'police', 'incident.', 'This', 'intolerable.', 'We', 'much', 'work', 'do.', '\#TerenceCrutcher', '-H', "It's", 'time', 'tell', '@WellsFargo', 'Wall', 'Street', 'works', 'Main', 'Street—not', 'way', 'around.', 'https://t.co/mYuTS4qgF4', 'Donald', "hasn't", 'given', 'money', 'Trump', 'Foundation', 'since', '2008—but', "it's", 'still', 'paying', 'bills.', 'https://t.co/2LRtZB3Ri2', 'Trump’s', 'calls', 'torture', 'mistreat', 'prisoners', 'go', 'values', 'fighting', 'defend.', 'We’re', 'better', 'this.', 'Help', 'get', 'vote', 'Hillary', '(plus,', 'get', 'free', 'sticker', 'sign', 'up!):', 'https://t.co/v4rISVHYuG', '"You', 'leave', 'ad', "muted—there's", 'nothing', 'hear."', '—@NyleDiMarco', 'https://t.co/tTgeqxNqYm', 'https://t.co/QOqcWnw7OJ', 'On', 'day', '1973,', 'tennis', 'champion', 'Billie', 'Jean', 'King', 'defeated', 'Bobby', 'Riggs', '“Battle', 'Sexes.”', 'https://t.co/G06Ol90j1O', 'Four', 'months', 'today,', 'next', 'president', 'walk', 'Oval', 'Office.', 'Help', 'make', 'sure', "it's", 'Donald', 'Trump:', 'https://t.co/Gxp2QdeIhH', 'A', 'real', 'headline', 'Republican', 'nominee:', '"Trump', 'used', '\$258,000', 'charity', 'settle', 'legal', 'problems."', 'https://t.co/2LRtZB3Ri2', 'FACT:', 'Donald', 'Trump', 'used', 'charitable', 'foundation', 'purchase', '*multiple*', 'six-foot-tall', 'paintings', 'himself.', 'https://t.co/tDeBH37w7h', 'Have', 'student', 'debt?', 'Planning', 'college?', 'See', 'much', 'money', "Hillary's", 'plan', 'would', 'save', 'you:', 'https://t.co/fiXgr6S3Ye', 'https://t.co/B8PCks6yXL', 'Keith', 'Lamont', 'Scott.', 'Terence', 'Crutcher.', 'Too', 'many', 'others.', 'This', 'got', 'end.', '-H', 'Every', 'student', 'able', 'graduate', 'college', 'without', 'taking', 'debt.', 'https://t.co/1aWqDOKh7p', 'https://t.co/KHguTDbKW9', 'Live', 'Orlando:', 'Watch', 'Hillary', 'share', 'plan', 'building', 'inclusive', 'economy', 'helps', 'everyone', 'get', 'ahead', '→', 'https://t.co/IX06FtcZG8', 'We', 'two', 'names', 'add', 'long', 'list', 'African', 'Americans', 'killed', 'police', 'officers.', 'It’s', 'unbearable,', 'needs', 'become', 'intolerable.', "We've", 'also', 'seen', 'targeting', 'police', 'officers—but', 'many', 'serve', 'every', 'day', 'courage', 'honor', 'committed', 'reform.', 'We', 'need', 'come', 'together', 'turn', 'tide,', 'stop', 'violence,', 'build', 'trust,', 'give', 'kids', 'chance', 'grow', 'safe', 'healthy.', 'In', 'America,', 'every', 'person,', 'matter', 'look', 'like', 'are,', 'chance', 'go', 'far', 'dreams', 'take', 'you.', 'When', 'leave', 'people', 'write', 'off,', 'shortchange', 'dreams,', 'shortchange', 'country', 'future.', 'Building', 'inclusive', 'economy', 'another', 'reason', 'we’ve', 'got', 'break', 'systemic', 'racism,', 'including', 'under-investment', 'communities', 'color.', 'None', 'us', 'gets', 'life', 'alone.', 'We', 'look', 'lift', 'up.', 'Over', '60\%', 'adults', 'disabilities', 'aren’t', 'workplace.', 'We', 'fix', 'that.', 'https://t.co/J3Jq21ejtR', 'We’ve', 'got', 'build', 'economy', 'welcomes', 'people', 'disabilities,', 'values', 'work,', 'rewards', 'fairly,', 'treats', 'respect.', 'Americans', 'disabilities', 'deserve', 'chance', 'work', 'alongside', 'without', 'disabilities—to', 'jobs', 'pay', '\&amp;', 'benefits.', 'The', 'ultimate', 'test', 'society', 'treat', 'fellow', 'human', 'beings,', 'especially', 'previously', 'left', 'behind.', "We'll", 'make', 'economy', 'country', 'welcoming', 'people', 'disabilities.', 'We', 'win', 'everyone', 'gets', 'share', "America's", 'promise.', 'We', 'believe', 'everyone', 'value.', 'We', 'believe', "everyone's", 'created', 'equal.', 'We', 'believe', 'love', 'trumps', 'hate.', 'https://t.co/tTgeqxNqYm', 'A', 'disability', "shouldn't", 'define', 'future.', 'At', '@ChildDefender,', 'Hillary', 'helped', 'give', 'kids', 'chance', 'succeed.', 'https://t.co/jaMcdARYn1', 'We', 'need', 'president', 'sees', 'best', 'us.', 'https://t.co/vX0Oycto1Q', '.@TimKaine', 'great', 'running', "mate—he's", 'great', 'guy', 'friend,', 'too.', 'https://t.co/5WX2qYgUjC', 'Going', 'bat', 'kids', 'often', 'counted', 'always', 'priority', 'Hillary.', 'https://t.co/lTxRVn3NBM', '"You', 'would', 'think', 'almost,', 'like,', 'something', 'wrong."', '—Donald', 'Trump', 'Mitt', 'Romney', 'failing', 'release', 'tax', 'r…', 'https://t.co/VzUQByCN2A', 'No', 'child', 'ever', 'grow', 'poverty,', 'yet', 'far', 'many', 'do.', 'We', 'better.', "Here's", 'how:', 'https://t.co/Qo1RmQDwd6', 'Trump', 'answer', 'exactly', 'refuses', 'believe', '@POTUS', 'American.', 'https://t.co/NReJ3wJE8l', 'Donald', 'Trump', 'really', 'good', 'spending', "people's", 'money—on:', 'Legal', 'settlements.', 'Payoffs.', 'Portraits', 'himself.', 'https://t.co/C5bXw5brI9', '"I', 'think', 'important', 'election', 'lifetime."', '@ChelseaClinton', 'takes', '🎤', "week's", 'podcast:', 'https://t.co/dAwaE8Dg0C', '"Donald', 'Trump', "doesn't", 'see', 'people', 'like', 'me,', 'sees', 'disability.', 'I', 'honestly', 'feel', 'bad', 'someone', 'much', 'hat…', 'https://t.co/NTeF9u8JpN', 'Most', 'people', 'bullies', 'grow', 'it.', 'Donald', 'Trump', "hasn't.", 'https://t.co/tEJ9ATm9BS', 'The', 'man', 'could', 'next', 'president', 'may', 'deeply', 'indebted', 'another', 'country.', 'Do', 'trust', 'run', 'ours?', 'https://t.co/5TU9olTqd5', 'Very', 'concerned', 'outage', 'Puerto', 'Rico', 'millions', 'families', "don't", 'power.', 'Hoping', "it's", 'resto…', 'https://t.co/Y2oG1CS2AN', 'Donald', "Trump's", 'ties', 'Russia', 'may', 'conflict', "America's", 'interests—but', "they're", 'great', 'bottom', 'line.', 'https://t.co/gYbm5HxfxG', "Let's", 'make', 'sure', 'nobody', 'works', 'full-time', 'America', 'live', 'poverty.', 'https://t.co/mpGBCNlemA', 'https://t.co/fCcXd1MrTo', '"I', 'really', 'regret', 'this."', '—Hillary', 'Between', 'Two', 'Ferns', 'https://t.co/OmDyINNCrW', '"Vote."', '—@Lin\_Manuel', 'https://t.co/tTgeqxNqYm', 'https://t.co/m9H9b9X7Ar', 'Our', 'favorite', 'moments', "Hillary's", 'appearance', 'Between', 'Two', 'Ferns', '→', 'https://t.co/tXLPQtR7tb', 'https://t.co/Er2YqHQVhl', '"He\textbackslash{}'s', '70', 'years', 'old,', "he's", 'still', 'bully."', '—Karen', '@realDonaldTrump', 'https://t.co/XBCJ4mTj24', 'Is', 'president', 'want', 'daughters?', 'https://t.co/GP4rfhPDGm', 'When', 'Donald', 'Trump', 'speaks', 'women,', 'daughters', 'hear', 'him.', 'https://t.co/0r1N6R8rV6', '"She', 'gives', 'us', 'hope', 'future.', "She's", 'girl."', '—Roxie,', 'co-owner', '@MercersDairy,', 'Hillary', 'https://t.co/s5zyaOBLXB', 'Charlotte', 'release', 'police', 'video', 'Keith', 'Lamont', 'Scott', 'shooting', 'without', 'delay.', 'We', 'must', 'ensure', 'justice', '\&amp;', 'work', 'bridge', 'divides.', '-H', 'Addiction', 'disease—not', 'moral', 'failing.', 'We', 'support', 'struggling', 'it.', '\#OpioidAwarenessWeek', 'https://t.co/V9Uz3jVEjN', '"Hillary', 'Clinton', 'would', 'make', 'sober,', 'smart', 'pragmatic', 'president.', 'Donald', 'Trump', 'would', 'catastrophe."', '—@LATimes', 'https://t.co/NG1am536OS', '"Donald', 'Trump', 'committed', 'perjury.', 'Or', 'looked', 'faces', 'Republican', 'faithful', 'knowingly', 'lied."', 'https://t.co/enl4NTjdX4', '"I', 'blown', 'away', '9-year-old', 'girl."', '—Hillary', 'meeting', 'disability', 'rights', 'advocate', '@AnastasiaSomoza', 'https://t.co/nrjcqfGiRe', 'Republicans', 'turning', 'backs', 'people', 'Flint', 'waited', 'far', 'long', 'help.', "It's", 'w…', 'https://t.co/sYyqDHAVXp', 'If', 'young', 'women', 'country', 'Donald', 'Trump', 'president,', 'think', 'themselves?', 'https://t.co/1IrjWddzzy', '"Hillary', 'Clinton', 'one', 'best', 'prepared', 'candidates', 'seek', 'presidency."', '—@LATimes', 'https://t.co/NG1am536OS', 'Donald', 'Trump', "doesn't", 'see', 'people', 'like', 'Anastasia—he', 'sees', 'disability.', 'https://t.co/0aDgpwHtjv', 'RT', 'believe', '\#LoveTrumpsHate', 'Then', 'make', 'sure', "you're", 'registered', 'vote:', 'https://t.co/tTgeqxNqYm', 'https://t.co/TlXODnaV53', 'We', 'know', 'well', 'Donald', 'Trump', 'is.', "Let's", 'make', 'sure', 'never', 'becomes', 'president:', 'https://t.co/tTgeqxNqYm', 'https://t.co/3lJjQEQ0BR', '"A', 'lifetime’s', 'commitment', 'solving', 'problems', 'real', 'world', 'qualifies', 'Hillary', 'Clinton', 'job."', '—@NYTimes', 'https://t.co/qaswl7IOOJ', "Hillary's", 'fighting', 'women', 'girls', 'entire', 'career—and', "she's", 'getting', 'started.', 'https://t.co/NMnrgEzNkT', '"I', 'thought,', 'woman—I', 'want', 'ride', 'her."', '—Roxie,', 'Republican', 'small', 'business', 'owner,', 'meeting', 'Hillary', 'https://t.co/s5zyaOBLXB', '"Our', 'choice,', 'Hillary', 'Clinton,', 'record', 'service', 'raft', 'pragmatic', 'ideas."', '—@NYTimes', 'endorsing', 'Hillary…', 'https://t.co/7Sus2PxlWC', 'The', 'new', '@NMAAHC', 'overdue', 'tribute', 'African', 'American', 'history.', "Let's", 'build', 'open,', 'inclusive', 'future', 'reflecting', 'past.', '-H']
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}38}]:} \PY{n}{word\PYZus{}counts} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+         \PY{k}{for} \PY{n}{word} \PY{o+ow}{in} \PY{n}{terms\PYZus{}stop}\PY{p}{:}
+             \PY{k}{if} \PY{n}{word} \PY{o+ow}{in} \PY{n}{word\PYZus{}counts}\PY{p}{:}
+                 \PY{n}{word\PYZus{}counts}\PY{p}{[}\PY{n}{word}\PY{p}{]} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+             \PY{k}{else}\PY{p}{:}
+                 \PY{n}{word\PYZus{}counts}\PY{p}{[}\PY{n}{word}\PY{p}{]} \PY{o}{=} \PY{l+m+mi}{1}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}39}]:} \PY{n+nb}{print}\PY{p}{(}\PY{n}{word\PYZus{}counts}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+\{'https://t.co/KHguTDbKW9': 1, 'Office': 1, 'girl."': 2, 'https://t.co/qa9qO4AFxW': 2, 'cleaner,': 1, '"Hillary': 3, 'States.': 1, 'https://t.co/2LRtZBls9A': 1, 'quit—no': 1, 'together.”': 1, 'r…': 1, '"projecting."': 1, 'https://t.co/QOqcWnw7OJ': 1, '"I\textbackslash{}'m': 1, 'blown': 1, 'history.': 2, 'shot': 1, 'https://t.co/t1uxcoVJT5': 1, 'Meet': 1, 'bullies': 1, 'officers—but': 1, 'Have': 1, 'Billie': 1, 'trumps': 3, 'there:': 1, 'qualifies': 1, 'tax': 2, 'right.': 1, 'https://t.co/X3oqEoOYsU': 1, 'afford': 2, 'https://t.co/KzgPQgPjxK': 1, 'daughters': 1, 'jobs': 1, 'need': 5, 'thing': 1, 'Street—not': 1, 'president.”': 2, 'https://t.co/qaswl7IOOJ': 1, 'https://t.co/HeafYwy0Fp': 1, 'ballot': 1, 'respect.': 1, 'grid': 1, '“I’m': 2, 'inclusive': 3, 'Office.': 1, 'progress': 2, 'https://t.co/mYba5FCBrb': 1, 'backs': 2, 'TV': 2, 'pragmatic': 2, '8,': 1, 'A': 2, 'inclusive,': 1, 'time': 2, 'draw': 1, 'Prisoners': 1, 'failing.': 1, 'loose': 1, 'reform.': 1, 'like': 4, 'Lamont': 2, 'Building': 1, 'miss': 1, 'I’m': 1, 'people': 10, 'off,': 1, 'vets.': 1, "didn't": 1, 'patriotic': 1, 'https://t.co/NJuB7JkyDL': 1, 'outage': 1, 'catastrophe."': 1, 'renewable': 1, 'equal.': 1, 'behind': 1, 'fix': 2, 'cynicism,': 1, 'faithful': 1, 'https://t.co/0aDgpwHtjv': 1, 'candidate': 2, 'Black': 1, 'shooting': 1, 'means': 2, 'Puerto': 1, 'standard': 1, 'https://t.co/Mmyqestken': 1, 'week,': 1, '.@FLOTUS': 1, 'African': 3, 'friend,': 1, 'account?': 1, 'today': 1, 'thinking': 1, 'resentment.': 1, 'answer': 1, 'girls': 1, 'violence': 1, 'audit—is': 1, 'running': 1, 'Sollender,': 1, 'president…who': 1, 'ideas,': 1, 'someone': 5, 'https://t.co/Dw4KoVgrQ3': 1, '@TempleUniv:': 1, 'better.': 1, 'disclosure': 1, 'Trump’s': 2, 'https://t.co/vm1KX2uOXt': 1, '10.': 1, 'shows': 1, 'poverty.': 1, 'https://t.co/3lJjQEQ0BR': 1, 'https://t.co/GP4rfhPDGm': 1, 'black': 2, 'Between': 2, 'Presidential.': 1, 'trust,': 1, 'ordinary': 1, 'Justice': 1, 'https://t.co/FIhZYLmy1l': 1, "Don't": 1, 'career.': 1, 'thought,': 1, 'Flint': 2, 'Trump': 41, 'small': 1, 'person,': 1, 'nobody': 1, '—@TimKaine': 1, 'defend.': 1, 'https://t.co/fiXgr6S3Ye': 1, 'birth': 1, 'https://t.co/NG1am536OS': 2, 'drowning': 1, 'line.': 1, 'Catch': 1, 'began': 1, 'video': 1, 'spirit': 1, 'help': 2, 'fan': 1, 'https://t.co/dAwaE8Dg0C': 1, 'help.': 1, 'have."': 1, 'projecting': 1, 'could': 1, 'Jean': 1, 'beat': 1, 'end.': 1, 'Mexican,': 1, 'honestly': 1, 'https://t.co/2LRtZB3Ri2': 2, 'ride': 1, 'true': 1, 'hat…': 1, 'problems': 1, '“Let’s': 1, 'define': 1, 'change—or': 1, 'vote': 4, 'it.': 4, 'peddling': 2, 'he,': 1, 'apology.': 1, '*multiple*': 1, 'apparent': 1, 'else': 2, 'plan': 3, 'promise.': 1, 'https://t.co/lTxRVn3NBM': 1, 'real': 3, 'drive': 1, 'poverty,': 1, 'too.': 2, "can't": 3, 'Sexes.”': 1, 'defeated': 1, 'For': 1, 'including': 1, 'days': 1, 'future': 3, 'bully."': 1, 'Obama.': 1, 'biggest': 1, 'stronger': 1, 'https://t.co/XwvEuxsrOV': 1, 'won’t': 1, 'president': 11, 'November': 2, 'full-time': 1, 'favorite': 1, 'everything.': 1, '—@Lin\_Manuel': 1, 'targeting': 1, 'committed': 2, '—@FLOTUS': 8, 'really': 2, '"When': 1, '1973,': 1, 'Muslims,': 1, 'attention': 1, 'disability': 2, 'glue."': 1, 'that.': 2, 'deeply': 1, 'registration': 1, 'Again,': 1, 'https://t.co/5WX2qYgUjC': 1, 'examples': 1, 'share': 2, 'accused': 1, 'turned': 1, 'families.': 1, 'seem': 1, 'Four': 1, 'dreams': 1, '\$258,000': 1, 'ultimate': 1, 'childhood': 1, 'wounded,': 1, 'prevail.”': 1, 'stop': 2, 'siding': 1, 'https://t.co/mpGBCNlemA': 1, 'Tim': 1, 'Foundation': 1, 'This': 7, 'responders”': 1, 'presidential': 3, 'onto': 1, 'never': 3, 'legacy': 1, 'reject': 1, 'simple.': 1, 'chance': 5, 'Scott.': 1, 'want': 10, 'campaign': 2, 'https://t.co/DXlybx7oA5': 1, 'discriminating': 1, 'be.”': 1, '“Your': 1, 'number': 1, '"You': 3, 'bat': 1, 'bridge': 1, 'struggling': 1, 'Bobby': 1, 'pal,': 1, 'podcast:': 1, '"Elections': 1, 'election,': 1, 'movement.': 1, 'When': 5, 'lifetime."': 1, 'New': 2, 'voice': 2, 'speak': 1, 'working': 1, 'love': 4, 'list': 1, 'undermining': 1, 'fight': 1, 'Then': 1, 'Star': 1, 'unwritten.': 1, 'again.': 1, 'support': 3, 'resto…': 1, 'choice,': 1, 'businesses,': 1, '—@LATimes': 2, 'debt.': 1, 'building': 1, 'job': 2, 'story,': 1, "hasn't": 1, "people's": 2, 'send': 1, 'proves': 1, '"A': 1, 'left': 1, '@CHCI': 1, 'lifetime’s': 1, 'We’re': 1, 'fans.': 1, 'graduate': 1, 'Main': 1, 'he’s': 1, 'denying': 1, 'American.”': 1, 'way': 2, 'tear': 1, 'York."': 1, 'ever': 3, 'go': 5, 'like,': 1, "it's": 3, 'friends,': 1, 'himself,': 1, 'something': 2, 'Keith': 2, 'regret': 2, 'old,': 1, 'back.': 2, 'electrical': 1, 'terrorist': 1, 'you."': 1, 'fear.': 1, 'woman—I': 1, 'torture': 1, 'college': 6, 'normal': 1, 'Emmy,': 1, 'pushing': 1, 'major': 1, 'https://t.co/nuG8Gqmzt1': 1, 'rhetoric': 1, 'choice': 1, 'others.': 2, 'candidacy:': 1, 'saddled': 1, 'Or': 1, 'let': 2, "shouldn't": 2, '6-year-olds': 1, 'USAF!': 1, 'Plans,': 1, 'clear:': 1, 'nominee': 1, "It's": 3, 'knocked': 2, 'qualified': 1, 'meeting': 2, 'settle': 2, "Can't": 1, 'That': 1, 'before.': 1, 'Minnesota,': 1, 'poisoning': 1, '"I': 7, 'ridiculous': 1, '“On': 1, 'prepared': 1, 'work.': 1, 'created': 1, 'veteran': 1, 'https://t.co/3ZIezeRTl9': 1, 'back': 3, 'You': 2, 'zero': 1, 'served': 1, 'career…focused': 1, 'Grateful': 1, 'https://t.co/B8PCks6yXL': 1, 'sign': 1, 'indebted': 1, '"Trump': 1, 'birtherism': 1, 'money—on:': 1, "wasn't": 1, 'can’t': 3, 'failing': 1, 'pay': 1, 'Be': 1, 'decide': 1, 'laws.': 1, 'student': 3, 'lesson': 1, 'Check': 1, 'without': 4, 'take': 5, 'judge': 2, 'headline': 1, 'would': 5, 'birthday,': 1, 'things': 4, 'https://t.co/lje3lKrZQy': 1, 'taking': 1, 'Simply': 1, "We'll": 1, 'And': 2, 'behind.': 1, 'Apologize': 1, 'you:': 2, "We've": 2, 'beings,': 1, 'Tune': 2, 'job."': 1, 'paranoia.': 1, 'said,': 1, '@TimKaine': 1, 'Jersey,': 1, 'bottom': 1, 'https://t.co/tXLPQtR7tb': 1, '—@BernieSanders': 1, 'opponent': 1, '"She': 1, 'together': 1, 'matters.': 1, 'push': 1, 'since': 1, 'years,': 1, 'said': 2, 'Obama': 2, '"Like': 1, 'always': 3, 'forgo': 1, 'https://t.co/m9H9b9X7Ar': 1, 'attacked': 1, 'family,': 1, 'able': 3, 'Answers,': 1, '“What': 1, 'https://t.co/mHGncsXG6y': 1, '.@TimKaine': 1, 'face.': 1, 'given': 1, 'leave': 3, 'w…': 1, 'vice': 1, 'https://t.co/nEB4qSm2YX': 1, 'graduation': 1, 'Hillary': 15, 'still': 2, 'charitable': 1, 'home': 1, 'insult': 1, 'seriously.”': 1, 'her."': 1, 'especially': 1, 'shouldn’t': 1, 'spending': 1, 'every': 4, 'hear': 1, 'what.': 1, 'Find': 1, 'sure': 5, 'blame': 1, 'police': 4, 'break': 1, 'temperament': 1, 'Do': 1, 'Too': 1, 'unbearable,': 1, 'https://t.co/XMDZPtLNMB': 1, 'https://t.co/1aWqDOKh7p': 1, 'stand': 2, 'career—and': 1, 'nominee:': 1, 'down,': 1, 'https://t.co/eADlIG9aQL': 1, 'https://t.co/XBCJ4mTj24': 1, 'Clinton,': 1, 'Most': 1, 'courage': 1, 'Any': 1, 'https://t.co/yq9IWnvXUc': 1, '"We’re': 1, 'Americans.”': 1, 'year,': 1, 'entire': 1, 'Optimism,': 1, 'aren’t': 1, '“We': 2, 'now.': 1, '🎤': 1, 'https://t.co/oZIm2is1lX': 1, 'business': 1, 'https://t.co/IX06FtcZG8': 1, 'https://t.co/G06Ol90j1O': 1, 'debt,': 1, 'world': 2, 'Mitt': 1, 'https://t.co/GyveEjARku': 1, 'https://t.co/nrjcqfGiRe': 1, 'life,': 1, 'families,': 1, 'It’s': 5, 'Attempting': 1, '“The': 1, 'lie': 1, '"We': 3, 'Russia': 1, 'turning': 2, 'We’ve': 2, 'Republican': 4, 'affordable': 1, 'gives': 1, 'tuition-free': 1, "She's": 1, 'Oval': 2, 'figure.': 1, 'reform': 1, 'Kids': 1, 'deflect': 1, 'returns.': 1, 'history': 1, "Let's": 4, 'tribute': 1, 'today,': 1, 'Payoffs.': 1, 'speaks': 1, 'also': 1, 'service"': 1, 'women': 6, 'endeavored': 1, "everyone's": 1, 'president{\ldots}we': 1, 'education': 1, 'https://t.co/DhSlyM6ILQ': 1, 'succeed.': 1, 'feel': 1, 'themselves?': 1, 'https://t.co/lKDDD0wwsn': 1, 'put': 1, 'unfit': 2, 'find': 1, 'Take': 1, 'today.': 1, 'No': 3, "aren't": 1, 'actually': 1, 'mom': 1, 'Register': 1, 'wants': 1, 'counted': 1, 'close': 1, 'https://t.co/0r1N6R8rV6': 1, 'legal': 1, 'https://t.co/f4YzTBmIdl': 1, 'up.”': 1, 'King': 1, 'owner,': 1, 'how:': 1, 'becomes': 1, 'color.': 1, 'https://t.co/tTgeqy51PU': 2, 'resolve.': 1, 'important': 2, 'Ferns': 2, 'battlefield.': 1, 'star': 1, 'hope': 1, "he's": 1, '—Hillary': 15, 'fairness': 1, '\#TerenceCrutcher': 1, 'two': 1, 'RT': 1, 'intolerable.': 2, 'simple': 1, 'presidency."': 1, 'sober,': 1, 'Another': 1, '@OfficialCBC:': 1, '—@POTUS:': 1, 'cancer': 1, 'college?': 1, 'foundation—funded': 1, "@POTUS's": 3, 'What': 2, 'November.': 1, 'killed': 1, 'other.”': 2, 'facing': 1, "you're": 2, 'passed': 1, 'reality': 2, 'takes': 2, 'greatest': 2, 'American': 7, 'friend.': 1, 'president,': 1, 'https://t.co/NReJ3wJE8l': 1, 'Donald': 26, 'democracy,': 1, 'afraid': 1, 'insults': 1, 'conflict': 1, 'trust': 1, 'progressive,': 1, 'cower.': 1, 'believe': 5, 'open,': 1, '—Roxie,': 2, '@FallonTonight': 1, 'got': 7, 'endorsing': 1, 'seen.”': 1, 'letters': 1, 'https://t.co/7Sus2PxlWC': 1, 'new': 1, 'smart': 1, 'https://t.co/tTgeqxNqYm': 13, 'raft': 1, 'crisis—but': 1, 'supremacists,': 1, 'innate': 1, 'keep': 1, 'lying.': 1, 'https://t.co/C5bXw5brI9': 1, 'getting': 1, 'benefits.': 1, 'problems."': 1, '@POTUS': 2, 'approved': 1, 'long': 3, 'jury': 1, 'reflecting': 1, 'change': 2, 'man': 2, 'test': 1, 'Bridges,': 1, 'https://t.co/GgDeBBfoUm': 1, 'violence,': 1, 'https://t.co/lkOFcHI4Py': 1, 'whether': 2, 'I’ve': 2, 'votes,': 1, 'hear."': 1, '"Our': 1, 'https://t.co/VeDJknt4JH': 1, 'hears': 1, 'income': 1, 'incites': 1, 'bad': 1, 'actions': 1, 'disqualify': 2, 'Every': 1, 'deplorable.': 1, 'far': 3, 'weekend’s': 1, 'accept': 1, 'president."': 1, 'discrimination': 1, 'Addiction': 1, 'Obama.”': 1, 'https://t.co/wDxspmxT9Q': 2, 'https://t.co/Jqf2jmx3D0': 1, 'debt-free': 1, 'attacks': 2, 'say': 3, 'Go': 1, 'voter.': 1, 'Wall': 1, 'aimed': 1, 'come': 1, 'ET': 1, 'fighting': 2, 'So': 2, 'registered': 2, 'https://t.co/vmavvobLcs': 1, 'best': 2, 'welcoming': 1, '126': 2, 'Nobody': 1, 'tries': 1, 'Day,': 1, 'don’t,': 1, 'destroy': 1, 'record': 1, 'distinguished': 1, 'decision': 1, 'well': 2, 'thrilled': 1, 'refuse': 1, 'https://t.co/tlfpcbVqkT': 1, 'preventing': 1, 'believes': 2, 'https://t.co/v4rISVHYuG': 1, 'kids': 3, 'fellow': 1, 'https://t.co/Qo1RmQDwd6': 1, 'do:': 1, 'resilience': 1, 'ensure': 1, 'economy': 4, 'opportunities': 1, '—Donald': 1, 'families': 2, 'resolve,': 1, 'candidate.': 1, 'vote.”': 1, 'https://t.co/Er2YqHQVhl': 1, 'down…she': 1, 'afraid…we': 1, 'get': 10, 'POW,': 1, 'seeking': 1, "We're": 1, 'science': 1, 'treats': 1, 'progress,': 1, 'Over': 1, 'I': 3, 'elected': 1, 'Congratulations': 1, 'purchase': 1, 'names': 1, 'see': 5, 'under-investment': 1, '-H': 4, 'years': 5, 'https://t.co/J3Jq21ejtR': 1, 'commit': 1, 'seek': 1, 'today.”': 1, 'https://t.co/vX0Oycto1Q': 1, 'Portraits': 1, 'tell': 1, 'lies': 1, 'debt?': 1, 'Two': 2, 'cheering': 1, 'started.': 1, 'send-off?': 1, 'us.': 1, 'Joel': 1, 'https://t.co/V9Uz3jVEjN': 1, 'sticker': 1, 'ours?': 1, 'https://t.co/3mQgqZ7b8V': 1, 'previously': 1, 'women,': 1, "America's": 2, 'Happy': 1, 'human': 1, 'yesterday,': 1, 'news.': 1, 'did:': 1, 'faults': 1, 'He': 2, 'Indiana,': 1, 'Scott': 1, 'Aleatha:': 1, 'race': 1, 'https://t.co/NTeF9u8JpN': 1, 'forward': 1, 'Barack': 3, 'him.': 1, 'political': 1, 'paintings': 1, 'treat': 1, 'waited': 1, 'adults': 1, 'entrepreneurial': 1, 'data': 1, 'POW': 1, 'isn’t': 1, 'asinine.': 1, 'https://t.co/muVNwgLSRs': 1, 'enough': 1, 'economic': 1, 'condemn': 1, 'https://t.co/NSy3fkcu1c': 1, 'trump': 1, 'Legal': 1, 'win': 1, 'https://t.co/mYuTS4qgF4': 1, 'racism,': 1, 'Expressing': 1, 'six-foot-tall': 1, 'children': 1, 'owes': 1, 'https://t.co/gzNvfNPeNu': 1, 'theory,': 1, 'degree."': 1, 'fall': 1, 'always.': 1, '11:35pm': 1, 'Americans': 4, 'power': 1, 'champion': 1, 'https://t.co/fCcXd1MrTo': 1, 'https://t.co/RGUqGN4I7i': 1, 'College': 1, 'child': 1, 'barriers': 1, 'knowingly': 1, 'Tolerance': 1, 'money': 2, 'Live': 1, 'power.': 1, 'down.': 1, 'retweets': 1, "they're": 1, 'do.': 2, 'alone."': 1, 'https://t.co/jaMcdARYn1': 1, 'pays': 1, 'November,': 1, '“Battle': 1, 'determine': 2, 'disease—not': 1, 'https://t.co/yTAG2iT8WL': 1, 'https://t.co/svkSUzhwYz': 1, 'undone.': 1, 'you’ve': 1, 'walk': 2, 'worst': 1, 'safe': 1, 'https://t.co/5TU9olTqd5': 1, 'Hillary…': 1, '@WellsFargo': 1, 'mistakes.': 1, 'lied."': 1, 'hate—not': 1, 'hard,': 1, 'disabilities': 2, '“You’ve': 1, 'spectacle': 1, 'finally': 1, 'lead': 1, 'ago': 1, '50': 1, 'society': 1, 'Latino': 1, 'unarmed': 1, 'we’ve': 3, 'Pretty': 1, 'Riggs': 1, 'community': 1, 'family': 1, 'one': 6, 'tuition.”': 1, 'incident.': 1, 'often': 1, 'early': 1, 'Nothing—including': 1, "city's": 1, '@ChelseaClinton': 1, 'concerned': 1, 'https://t.co/gYbm5HxfxG': 1, 'hiding': 1, 'show.': 1, 'bank': 1, '"Let': 1, 'part': 2, 'Virginia:': 1, 'shortchange': 2, '2008—but': 1, "she's": 1, 'up.': 1, 'https://t.co/tEJ9ATm9BS': 1, 'value.': 1, 'white': 1, 'https://t.co/SmLmTrVhOr': 1, 'https://t.co/sYyqDHAVXp': 1, 'Hillary.': 2, 'this.': 4, 'deserve': 3, 'job,': 1, 'refuses': 1, 'good': 3, 'rewards': 1, 'scale': 1, 'rights': 1, '—Barack': 1, 'generations.': 1, 'Trump.': 2, 'States,': 1, 'first': 4, 'We': 24, 'for,': 1, 'https://t.co/tWWEMx0T9s': 1, 'appointed': 1, 'service': 1, "week's": 1, 'Gold': 1, 'Remembrance': 1, 'going': 2, 'vote."': 2, 'release': 2, '"Vote."': 1, 'Big': 1, 'add': 1, 'Charlotte': 1, 'powerful:': 1, "Here's": 1, 'faced': 1, '@FLOTUS:': 1, 'Democracy': 1, 'used': 2, 'looks': 4, 'grow': 3, '@USAirForce': 1, 'using': 2, 'election': 4, 'charity': 1, 'build': 6, '70': 1, 'terrible': 1, 'Romney': 1, 'releasing': 1, 'done': 1, 'times': 1, 'tide,': 1, 'Very': 1, 'great': 5, 'WWII': 1, 'ties': 1, 'mistreat': 1, 'ad': 1, 'friends': 1, 'we’re': 1, '60\%': 1, 'https://t.co/t2F93Ml785': 1, 'https://t.co/0dVB5B0gbC': 1, 'workplace.': 1, 'On': 3, "don't": 1, 'Orlando:': 1, 'debate.': 1, 'refused': 1, 'president:': 2, 'If': 4, 'https://t.co/xYebpm9NaN': 1, 'alone': 1, 'right': 3, 'run': 1, 'taxpayers:': 1, 'everyone': 4, 'appearance': 1, 'reveals': 1, 'day': 2, 'citizenship.': 2, 'Rico': 1, 'work': 5, 'divisive': 1, 'Is': 1, 'trail': 1, 'pen': 1, 'us': 6, 'Terence': 1, 'https://t.co/qg6J7SXrr0': 1, 'many': 3, 'terrorists': 2, 'strongly': 1, 'faces': 1, 'election.': 1, '@realDonaldTrump': 1, 'systemic': 1, 'serve': 1, 'disability.': 2, 'guy': 1, 'solving': 1, '@FLOTUS': 1, 'Janelle': 1, 'That’s': 1, 'tennis': 1, 'himself.': 3, 'everything': 1, 'you,': 1, 'habit': 1, 'cannon': 1, 'give': 3, 'America,': 3, 'thoughts': 1, 'values': 2, 'try': 1, 'write': 1, 'beliefs': 1, 'https://t.co/TlXODnaV53': 1, 'healthy.': 1, 'dreams,': 1, 'moments': 1, '"He\textbackslash{}'s': 1, 'disgrace.': 1, 'caring': 1, 'seen': 2, 'message:': 1, 'conspiracy': 2, 'threat': 1, 'sees': 5, '@ChildDefender,': 1, 'works': 2, 'movement': 2, 'Let’s': 2, 'breast': 1, 'call': 3, 'alone.': 1, 'prisoners': 1, 'outside-in': 1, 'hearts': 1, 'real,': 1, 'watch': 2, 'foundation': 1, 'undermine': 1, 'gets': 5, 'person': 1, 'FACT:': 1, 'https://t.co/s5zyaOBLXB': 2, 'https://t.co/enl4NTjdX4': 1, 'commitment': 1, 'daughters?': 1, 'comes': 1, 'interests—but': 1, 'becoming': 1, 'shares': 1, 'you.': 1, 'against:': 1, '“This': 1, 'must': 1, 'divides.': 1, 'The': 5, 'Psychologists': 1, 'https://t.co/CIoKKKIxqz': 1, 'Planning': 1, 'opportunity': 1, 'understand': 1, '9': 1, 'millions': 1, 'not.”': 1, 'yours,': 1, 'exactly': 3, 'laid': 1, 'birther': 4, 'don’t': 1, 'brave': 2, 'doesn’t': 3, 'live': 3, 'young': 1, '8': 1, '"The': 3, 'safer{\ldots}and': 1, 'moral': 1, 'turn': 2, 'everyone:': 1, 'welcomes': 1, 'country': 5, 'families."': 1, 'much': 5, 'Crutcher.': 1, 'choose': 1, 'wrong."': 1, 'At': 1, 'stage': 1, 'Street': 1, 'qualifications': 1, 'message.”': 1, 'went': 1, 'https://t.co/VzUQByCN2A': 1, '“I': 1, 'presidency': 1, 'almost,': 1, 'communities': 1, 'words': 1, 'helps': 1, 'I?"': 1, 'National': 1, 'bills.': 1, 'them"': 1, 'veterans.': 1, 'disabilities—to': 1, '9-year-old': 1, 'honor': 1, '"did': 1, 'disabilities.': 1, 'candidates': 1, 'become': 2, 'needs': 2, 'problems.': 1, 'climate': 1, 'meet': 1, 'world.': 1, 'story': 1, 'https://t.co/Y2oG1CS2AN': 1, '\#OpioidAwarenessWeek': 1, 'ballot.': 3, 'paying': 1, 'think': 3, 'path': 1, 'five': 2, 'rubber,': 1, "Trump's": 2, 'America': 5, 'inside-out.': 1, 'wrong': 3, 'Just': 1, 'Republicans': 1, '—Karen': 1, 'up!):': 1, '@MercersDairy,': 1, 'another': 2, 'buys': 1, 'name-calling': 1, 'hate.': 4, '@TempleUniv': 1, 'who’s': 2, 'look': 2, 'people,': 1, 'advocate': 1, 'months': 1, 'lift': 1, 'Chip': 1, 'clear': 2, 'held': 1, 'https://t.co/h4qUNNnTOf': 1, 'are,': 2, 'campaign."': 1, '"Donald': 3, 'Anastasia—he': 1, '—@NyleDiMarco': 2, 'perjury.': 1, 'overdue': 1, 'certificates': 1, 'Kaine!”': 1, 'lets': 1, 'read': 1, 'born': 4, 'serving': 1, 'energy': 1, 'Watch': 1, 'students': 2, 'past.': 1, 'charge.': 1, 'Americans,': 1, 'settlements.': 1, 'https://t.co/PhnJJoDmPD': 1, 'origin': 1, 'helped': 1, 'resilient': 1, 'https://t.co/Gxp2QdeIhH': 1, '@NMAAHC': 1, 'Our': 2, 'say:': 1, 'said:': 1, 'this."': 1, 'Going': 1, 'hands': 1, 'It': 5, 'co-owner': 1, 'https://t.co/tmHf8m2CdX': 1, 'https://t.co/w00QO1GwyH': 1, 'section,': 1, 'rate': 1, '"Progress': 1, 'voters?': 1, 'Leading': 1, 'None': 1, 'Trump:': 1, 'debt."': 1, 'Clinton': 6, 'me,': 1, 'took': 1, 'Ideas,': 1, 'https://t.co/OmDyINNCrW': 1, 'Help': 2, 'officers.': 1, 'tenants': 1, 'https://t.co/1IrjWddzzy': 1, 'save': 2, 'led': 3, '→': 3, 'know': 5, 'Kate!': 1, 'hatred': 1, 'enough.': 1, 'President': 1, 'https://t.co/4uBuIljQML': 1, "you'll": 1, 'face': 1, '@AnastasiaSomoza': 1, 'trail.': 1, 'racist': 2, 'together,': 1, 'people.': 1, 'de-legitimize': 1, 'matter': 2, 'next': 4, 'work,': 1, '\&amp;': 6, 'future.': 3, 'demand': 1, 'hard': 1, 'vote:': 2, 'party': 1, 'reason': 1, 'spent': 3, 'better': 4, 'In': 3, 'stems': 1, 'United': 2, 'looked': 1, 'sit': 1, 'War': 1, 'nominee.': 1, 'Hoping': 1, 'nothing': 1, '"Your': 1, 'is.': 2, 'are.': 2, '"He': 1, 'elect': 1, 'life': 2, 'country.': 2, "hasn't.": 1, 'lawsuits.': 1, "mate—he's": 1, 'men': 2, 'president.': 4, 'insults.': 2, 'https://t.co/UP93LCzURv': 1, '\#LoveTrumpsHate': 1, 'decisions': 1, 'lying': 1, 'stop.': 1, 'ahead': 1, 'American.': 1, 'worse.': 1, 'Next': 1, 'https://t.co/tDeBH37w7h': 1, 'https://t.co/mpGiRIaPgD': 1, "Hillary's": 6, 'higher': 1, 'make': 11, 'cable': 1, 'go.': 1, 'ideas."': 1, "muted—there's": 1, 'disabilities,': 1, 'decides': 1, "doesn't": 3, 'plain': 1, 'made': 2, 'done.': 1, '"Everyone': 1, 'mark': 1, 'stunts': 1, 'challenges': 1, 'away': 1, 'free': 1, 'kind': 1, 'ballot."': 1, 'President,': 1, 'fairly,': 1, '"I’m': 1, 'walls.': 1, 'yet': 1, 'turns': 1, 'To': 1, 'out.': 1, 'vigilant,': 1, 'calls': 1, 'delay.': 1, 'https://t.co/NMnrgEzNkT': 1, 'money—to': 1, 'justice': 1, '(plus,': 1, 'alongside': 1, 'Obama:': 1, 'inequality': 1, 'https://t.co/NblU3Tth7T': 1, 'may': 2, 'around.': 1, 'As': 1, 'See': 1, '—@NYTimes': 2, 'priority': 1, '"Read': 1, 'bullying,': 1, 'anger.': 1, '—@FLOTUS:': 3, 'generation': 1, 'sits': 1\}
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}60}]:} \PY{c+c1}{\PYZsh{}one more filtering with some custome specified stopwords what are not in nltk library}
+         \PY{n}{filterHillaryClinton} \PY{o}{=} \PY{p}{\PYZob{}}\PY{n}{k}\PY{p}{:} \PY{n}{v} \PY{k}{for} \PY{n}{k}\PY{p}{,} \PY{n}{v} \PY{o+ow}{in} \PY{n}{word\PYZus{}counts}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)} \PY{k}{if} \PY{n}{v} \PY{o}{\PYZgt{}} \PY{l+m+mi}{1}\PY{p}{\PYZcb{}}
+         
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{filterHillaryClinton}\PY{p}{)}
+         
+         \PY{n}{Stopwords} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{A}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{AND}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{An}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{And}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{As}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Be}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{C}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{this}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{they}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Can}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{D}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Do}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Don}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{For}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Go}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{He}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{IS}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Is}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{It}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{K}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{M}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{I}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{O}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{On}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{P}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Q}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{R}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{S}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{So}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{T}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{THE}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{That}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{The}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Their}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{There}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{They}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{This}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{U}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{we}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{you}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{words}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{w}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ve}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{u}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{the}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{that}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{than}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{her}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{he}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{had}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{for}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{e}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{d}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{co}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{a}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{V}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TV}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{was}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{to}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{so}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{she}\PY{l+s+s1}{\PYZsq{}}
+         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{t}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{such}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{some}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{s}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{re}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{my}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{m}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ll}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{is}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{it}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{of}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{as}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{at}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{am}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{t}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{or}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{our}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{in}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{do}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{be}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{them}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{they}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{their}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{this}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{were}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{when}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{who}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{with}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{what}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{amp}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{an}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{and}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{are}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{000}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{your}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{she}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{him}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{his}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{get}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{but}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{would}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{https}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{on}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{have}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{will}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{all}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{has}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{just}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{now}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{out}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{about}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{from}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{by}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{the}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{v}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{—Hillary}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZam{}amp;}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Hillary}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         
+         \PY{k}{for} \PY{n}{k}\PY{p}{,} \PY{n}{v} \PY{o+ow}{in} \PY{n+nb}{list}\PY{p}{(}\PY{n}{filterHillaryClinton}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+             \PY{n+nb}{print}\PY{p}{(}\PY{n}{k}\PY{p}{,} \PY{n}{v}\PY{p}{)}
+             \PY{k}{if} \PY{n}{k} \PY{o+ow}{in} \PY{n}{Stopwords}\PY{p}{:}
+                 \PY{k}{del} \PY{n}{filterHillaryClinton}\PY{p}{[}\PY{n}{k}\PY{p}{]}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+\{'insults.': 2, 'girl."': 2, 'https://t.co/qa9qO4AFxW': 2, 'disqualify': 2, 'best': 2, 'others.': 2, '-H': 4, 'time': 2, 'let': 2, "shouldn't": 2, 'himself.': 3, 'future.': 3, 'https://t.co/wDxspmxT9Q': 2, 'history.': 2, 'attacks': 2, 'say': 3, "It's": 3, 'knocked': 2, 'trumps': 3, '—@NYTimes': 2, 'tax': 2, 'fighting': 2, 'So': 2, 'afford': 2, 'registered': 2, 'student': 3, 'seen': 2, '"I': 7, 'need': 5, 'president.”': 2, 'disability.': 2, 'https://t.co/2LRtZB3Ri2': 2, '“I’m': 2, 'build': 6, 'back': 3, 'inclusive': 3, '"Hillary': 3, 'progress': 2, 'backs': 2, 'TV': 2, 'watch': 2, 'A': 2, 'president:': 2, 'believes': 2, 'kids': 3, 'can’t': 3, 'like': 4, 'economy': 4, 'help': 2, 'people': 10, 'got': 7, 'families': 2, 'matter': 2, 'led': 3, 'without': 4, 'take': 5, 'judge': 2, 'We’ve': 2, 'get': 10, 'would': 5, 'ever': 3, 'fix': 2, 'Obama': 2, 'candidate': 2, 'exactly': 3, 'I': 3, 'better': 4, 'And': 2, 'brave': 2, 'doesn’t': 3, "We've": 2, 'Tune': 2, 'years': 5, 'Between': 2, 'turning': 2, "Let's": 4, 'turn': 2, 'country': 5, 'much': 5, 'someone': 5, 'really': 2, 'always': 3, "doesn't": 3, 'Trump’s': 2, 'said': 2, 'students': 2, 'able': 3, "America's": 2, 'day': 2, 'black': 2, 'Hillary.': 2, 'peddling': 2, 'made': 2, 'He': 2, 'America,': 3, 'Hillary': 15, 'Flint': 2, 'Trump': 41, 'Barack': 3, 'birther': 4, 'every': 4, 'become': 2, 'needs': 2, 'https://t.co/NG1am536OS': 2, 'sure': 5, 'police': 4, 'ballot.': 3, 'means': 2, 'money': 2, 'this.': 4, 'think': 3, 'five': 2, "Trump's": 2, 'America': 5, 'stand': 2, 'clear': 2, 'see': 5, 'movement': 2, 'hate.': 4, 'next': 4, 'who’s': 2, 'look': 2, 'Americans': 4, '“We': 2, 'vote': 4, 'it.': 4, 'way': 2, 'world': 2, 'things': 4, 'are,': 2, 'chance': 5, 'It’s': 5, 'vote."': 2, 'else': 2, 'plan': 3, 'Ferns': 2, 'do.': 2, 'African': 3, 'real': 3, '—@LATimes': 2, 'too.': 2, "can't": 3, 'born': 4, 'determine': 2, 'Oval': 2, 'future': 3, 'Our': 2, 'The': 5, 'spent': 3, 'walk': 2, 'still': 2, 'live': 3, 'wrong': 3, 'president': 11, 'November': 2, 'If': 4, '"Donald': 3, 'used': 2, 'disabilities': 2, 'committed': 2, 'women': 6, '—@FLOTUS': 8, '126': 2, 'Let’s': 2, 'Republican': 4, 'unfit': 2, 'first': 4, 'that.': 2, 'one': 6, 'No': 3, 'https://t.co/tTgeqxNqYm': 13, 'In': 3, '—@NyleDiMarco': 2, 'Clinton': 6, 'far': 3, 'disability': 2, 'Two': 2, 'looks': 4, 'United': 2, 'save': 2, 'another': 2, '→': 3, 'other.”': 2, 'know': 5, 'https://t.co/tTgeqy51PU': 2, 'important': 2, 'stop': 2, 'racist': 2, '—Hillary': 15, 'This': 7, 'deserve': 3, 'presidential': 3, 'we’ve': 3, 'never': 3, '\&amp;': 6, 'good': 3, 'Help': 2, 'intolerable.': 2, 'vote:': 2, 'want': 10, 'campaign': 2, 'You': 2, 'Trump.': 2, "@POTUS's": 3, 'What': 2, 'We': 24, 'shortchange': 2, '"You': 3, 'settle': 2, 'going': 2, "you're": 2, 'part': 2, 'reality': 2, 'release': 2, 'takes': 2, 'greatest': 2, 'are.': 2, 'pragmatic': 2, 'American': 7, 'life': 2, 'country.': 2, 'is.': 2, 'When': 5, 'well': 2, 'Keith': 2, 'voice': 2, 'Donald': 26, 'president.': 4, 'grow': 3, 'love': 4, 'give': 3, 'values': 2, 'using': 2, 'election': 4, 'believe': 5, '—Roxie,': 2, 'works': 2, "Hillary's": 6, 'support': 3, 'make': 11, 'sees': 5, 'Lamont': 2, 'great': 5, 'job': 2, 'https://t.co/s5zyaOBLXB': 2, 'leave': 3, "people's": 2, 'may': 2, 'share': 2, 'everyone': 4, 'It': 5, 'conspiracy': 2, 'On': 3, '@POTUS': 2, 'long': 3, 'call': 3, 'gets': 5, 'meeting': 2, 'right': 3, 'change': 2, 'man': 2, 'go': 5, "it's": 3, '"We': 3, 'citizenship.': 2, 'something': 2, 'New': 2, 'work': 5, 'regret': 2, 'back.': 2, 'whether': 2, 'I’ve': 2, 'you:': 2, '"The': 3, 'men': 2, 'us': 6, '—@FLOTUS:': 3, 'college': 6, 'many': 3, 'terrorists': 2\}
+insults. 2
+girl." 2
+https://t.co/qa9qO4AFxW 2
+disqualify 2
+best 2
+others. 2
+-H 4
+time 2
+let 2
+shouldn't 2
+himself. 3
+future. 3
+https://t.co/wDxspmxT9Q 2
+history. 2
+attacks 2
+say 3
+It's 3
+knocked 2
+trumps 3
+—@NYTimes 2
+tax 2
+fighting 2
+So 2
+afford 2
+registered 2
+student 3
+seen 2
+"I 7
+need 5
+president.” 2
+disability. 2
+https://t.co/2LRtZB3Ri2 2
+“I’m 2
+build 6
+back 3
+inclusive 3
+"Hillary 3
+progress 2
+backs 2
+TV 2
+watch 2
+A 2
+president: 2
+believes 2
+kids 3
+can’t 3
+like 4
+economy 4
+help 2
+people 10
+got 7
+families 2
+matter 2
+led 3
+without 4
+take 5
+judge 2
+We’ve 2
+get 10
+would 5
+ever 3
+fix 2
+Obama 2
+candidate 2
+exactly 3
+I 3
+better 4
+And 2
+brave 2
+doesn’t 3
+We've 2
+Tune 2
+years 5
+Between 2
+turning 2
+Let's 4
+turn 2
+country 5
+much 5
+someone 5
+really 2
+always 3
+doesn't 3
+Trump’s 2
+said 2
+students 2
+able 3
+America's 2
+day 2
+black 2
+Hillary. 2
+peddling 2
+made 2
+He 2
+America, 3
+Hillary 15
+Flint 2
+Trump 41
+Barack 3
+birther 4
+every 4
+become 2
+needs 2
+https://t.co/NG1am536OS 2
+sure 5
+police 4
+ballot. 3
+means 2
+money 2
+this. 4
+think 3
+five 2
+Trump's 2
+America 5
+stand 2
+clear 2
+see 5
+movement 2
+hate. 4
+next 4
+who’s 2
+look 2
+Americans 4
+“We 2
+vote 4
+it. 4
+way 2
+world 2
+things 4
+are, 2
+chance 5
+It’s 5
+vote." 2
+else 2
+plan 3
+Ferns 2
+do. 2
+African 3
+real 3
+—@LATimes 2
+too. 2
+can't 3
+born 4
+determine 2
+Oval 2
+future 3
+Our 2
+The 5
+spent 3
+walk 2
+still 2
+live 3
+wrong 3
+president 11
+November 2
+If 4
+"Donald 3
+used 2
+disabilities 2
+committed 2
+women 6
+—@FLOTUS 8
+126 2
+Let’s 2
+Republican 4
+unfit 2
+first 4
+that. 2
+one 6
+No 3
+https://t.co/tTgeqxNqYm 13
+In 3
+—@NyleDiMarco 2
+Clinton 6
+far 3
+disability 2
+Two 2
+looks 4
+United 2
+save 2
+another 2
+→ 3
+other.” 2
+know 5
+https://t.co/tTgeqy51PU 2
+important 2
+stop 2
+racist 2
+—Hillary 15
+This 7
+deserve 3
+presidential 3
+we’ve 3
+never 3
+\&amp; 6
+good 3
+Help 2
+intolerable. 2
+vote: 2
+want 10
+campaign 2
+You 2
+Trump. 2
+@POTUS's 3
+What 2
+We 24
+shortchange 2
+"You 3
+settle 2
+going 2
+you're 2
+part 2
+reality 2
+release 2
+takes 2
+greatest 2
+are. 2
+pragmatic 2
+American 7
+life 2
+country. 2
+is. 2
+When 5
+well 2
+Keith 2
+voice 2
+Donald 26
+president. 4
+grow 3
+love 4
+give 3
+values 2
+using 2
+election 4
+believe 5
+—Roxie, 2
+works 2
+Hillary's 6
+support 3
+make 11
+sees 5
+Lamont 2
+great 5
+job 2
+https://t.co/s5zyaOBLXB 2
+leave 3
+people's 2
+may 2
+share 2
+everyone 4
+It 5
+conspiracy 2
+On 3
+@POTUS 2
+long 3
+call 3
+gets 5
+meeting 2
+right 3
+change 2
+man 2
+go 5
+it's 3
+"We 3
+citizenship. 2
+something 2
+New 2
+work 5
+regret 2
+back. 2
+whether 2
+I’ve 2
+you: 2
+"The 3
+men 2
+us 6
+—@FLOTUS: 3
+college 6
+many 3
+terrorists 2
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}61}]:} \PY{n}{toptwentyHillaryClinton} \PY{o}{=} \PY{n+nb}{dict}\PY{p}{(}\PY{n}{Counter}\PY{p}{(}\PY{n}{filterHillaryClinton}\PY{p}{)}\PY{o}{.}\PY{n}{most\PYZus{}common}\PY{p}{(}\PY{l+m+mi}{20}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{toptwentyHillaryClinton}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+\{'American': 7, 'president': 11, 'one': 6, 'make': 11, 'https://t.co/tTgeqxNqYm': 13, 'We': 24, '"I': 7, 'need': 5, 'Clinton': 6, 'women': 6, 'Donald': 26, '—@FLOTUS': 8, 'build': 6, "Hillary's": 6, 'us': 6, 'Trump': 41, 'got': 7, 'college': 6, 'people': 10, 'want': 10\}
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}62}]:} \PY{n}{plt}\PY{o}{.}\PY{n}{bar}\PY{p}{(}\PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{toptwentyHillaryClinton}\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{n}{toptwentyHillaryClinton}\PY{o}{.}\PY{n}{values}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{align}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{edge}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{xticks}\PY{p}{(}\PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{toptwentyHillaryClinton}\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{n}{toptwentyHillaryClinton}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{rotation}\PY{o}{=}\PY{l+m+mi}{90}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{HillaryClinton Twenty Most Frequent Words}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Words}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Counts}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}62}]:} <matplotlib.text.Text at 0x115729780>
+\end{Verbatim}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Hillary_twetter-Copy1_files/Hillary_twetter-Copy1_35_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}63}]:} \PY{c+c1}{\PYZsh{}counting words}
+         \PY{k+kn}{from} \PY{n+nn}{collections} \PY{k}{import} \PY{n}{Counter}
+         \PY{n}{counts} \PY{o}{=} \PY{n}{Counter}\PY{p}{(}\PY{n}{word\PYZus{}counts}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{counts}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Counter(\{'Trump': 41, 'Donald': 26, 'We': 24, 'Hillary': 15, '—Hillary': 15, 'https://t.co/tTgeqxNqYm': 13, 'president': 11, 'make': 11, 'people': 10, 'want': 10, 'get': 10, '—@FLOTUS': 8, 'American': 7, 'got': 7, 'This': 7, '"I': 7, 'college': 6, 'us': 6, '\&amp;': 6, "Hillary's": 6, 'women': 6, 'Clinton': 6, 'one': 6, 'build': 6, 'sure': 5, 'go': 5, 'great': 5, 'work': 5, 'sees': 5, 'gets': 5, 'The': 5, 'country': 5, 'need': 5, 'someone': 5, 'chance': 5, 'When': 5, 'take': 5, 'would': 5, 'It’s': 5, 'believe': 5, 'see': 5, 'years': 5, 'know': 5, 'much': 5, 'America': 5, 'It': 5, 'love': 4, 'looks': 4, 'without': 4, 'things': 4, 'everyone': 4, 'Americans': 4, 'next': 4, 'If': 4, 'hate.': 4, 'president.': 4, 'like': 4, 'vote': 4, 'it.': 4, 'Republican': 4, 'police': 4, 'every': 4, '-H': 4, 'economy': 4, "Let's": 4, 'better': 4, 'this.': 4, 'first': 4, 'election': 4, 'birther': 4, 'born': 4, 'inclusive': 3, 'plan': 3, 'real': 3, '"Hillary': 3, 'presidential': 3, 'never': 3, 'support': 3, "it's": 3, 'back': 3, 'student': 3, 'leave': 3, '"We': 3, "@POTUS's": 3, 'say': 3, 'On': 3, 'right': 3, 'himself.': 3, 'exactly': 3, 'live': 3, '"The': 3, 'call': 3, 'led': 3, "doesn't": 3, 'trumps': 3, 'African': 3, 'ballot.': 3, 'future.': 3, "can't": 3, 'future': 3, 'grow': 3, '"You': 3, "It's": 3, 'can’t': 3, 'ever': 3, 'always': 3, 'able': 3, 'No': 3, 'long': 3, 'kids': 3, 'I': 3, 'Barack': 3, 'spent': 3, 'we’ve': 3, 'deserve': 3, 'good': 3, 'wrong': 3, 'many': 3, 'give': 3, 'America,': 3, 'doesn’t': 3, 'think': 3, '"Donald': 3, 'far': 3, '→': 3, 'In': 3, '—@FLOTUS:': 3, 'https://t.co/qa9qO4AFxW': 2, 'afford': 2, 'president.”': 2, 'disability.': 2, '“I’m': 2, 'time': 2, 'fix': 2, 'Obama': 2, 'candidate': 2, 'means': 2, 'Between': 2, 'Trump’s': 2, 'https://t.co/NG1am536OS': 2, 'else': 2, 'too.': 2, 'watch': 2, 'committed': 2, 'Two': 2, 'job': 2, 'something': 2, 'regret': 2, 'fighting': 2, 'best': 2, 'others.': 2, 'let': 2, 'knocked': 2, 'We’ve': 2, 'And': 2, 'really': 2, 'stand': 2, 'way': 2, 'turning': 2, 'unfit': 2, 'important': 2, 'intolerable.': 2, 'other.”': 2, 'takes': 2, 'greatest': 2, '—Roxie,': 2, 'Lamont': 2, '@POTUS': 2, 'change': 2, 'brave': 2, 'life': 2, 'I’ve': 2, 'United': 2, 'attacks': 2, '—@NYTimes': 2, 'So': 2, 'registered': 2, 'believes': 2, 'help': 2, 'families': 2, "America's": 2, 'He': 2, 'money': 2, 'do.': 2, 'walk': 2, 'still': 2, 'disabilities': 2, 'part': 2, 'Trump.': 2, 'going': 2, 'using': 2, 'Ferns': 2, 'terrorists': 2, 'movement': 2, 'Let’s': 2, 'turn': 2, 'needs': 2, "Trump's": 2, 'who’s': 2, 'look': 2, 'clear': 2, 'matter': 2, 'Our': 2, 'you:': 2, 'Help': 2, 'is.': 2, 'are.': 2, 'share': 2, 'conspiracy': 2, 'girl."': 2, 'history.': 2, 'tax': 2, 'disqualify': 2, 'progress': 2, 'backs': 2, 'TV': 2, 'settle': 2, 'https://t.co/2LRtZB3Ri2': 2, 'said': 2, 'black': 2, 'Flint': 2, 'five': 2, 'another': 2, 'peddling': 2, 'vote."': 2, 'https://t.co/s5zyaOBLXB': 2, 'November': 2, '126': 2, 'that.': 2, 'stop': 2, 'campaign': 2, 'New': 2, 'voice': 2, 'pragmatic': 2, "people's": 2, 'back.': 2, "shouldn't": 2, 'You': 2, 'president:': 2, 'judge': 2, "We've": 2, 'Tune': 2, 'A': 2, '“We': 2, 'Oval': 2, 'https://t.co/tTgeqy51PU': 2, 'world': 2, 'What': 2, "you're": 2, 'reality': 2, 'man': 2, 'whether': 2, 'https://t.co/wDxspmxT9Q': 2, 'well': 2, 'determine': 2, 'become': 2, 'works': 2, 'Hillary.': 2, 'shortchange': 2, 'release': 2, 'Keith': 2, 'day': 2, 'citizenship.': 2, 'seen': 2, 'used': 2, 'students': 2, 'are,': 2, '—@NyleDiMarco': 2, '—@LATimes': 2, 'disability': 2, 'save': 2, 'racist': 2, 'vote:': 2, 'country.': 2, 'men': 2, 'insults.': 2, 'values': 2, 'made': 2, 'meeting': 2, 'may': 2, 'cleaner,': 1, 'States.': 1, '"projecting."': 1, 'https://t.co/QOqcWnw7OJ': 1, 'https://t.co/nEB4qSm2YX': 1, 'names': 1, 'ours?': 1, 'https://t.co/t1uxcoVJT5': 1, 'person,': 1, 'video': 1, 'off,': 1, 'promise.': 1, 'Rico': 1, 'At': 1, 'grid': 1, 'insult': 1, '8,': 1, 'https://t.co/X3oqEoOYsU': 1, 'Prisoners': 1, 'failing.': 1, 'created': 1, 'miss': 1, 'I’m': 1, "didn't": 1, 'patriotic': 1, 'https://t.co/NJuB7JkyDL': 1, 'renewable': 1, 'Black': 1, 'https://t.co/Mmyqestken': 1, 'week,': 1, 'account?': 1, 'resentment.': 1, 'Sollender,': 1, 'president…who': 1, 'ideas,': 1, 'https://t.co/Dw4KoVgrQ3': 1, 'https://t.co/vm1KX2uOXt': 1, '10.': 1, 'new': 1, 'Presidential.': 1, 'trust,': 1, 'https://t.co/NMnrgEzNkT': 1, "Don't": 1, 'career.': 1, '—@TimKaine': 1, 'young': 1, 'spirit': 1, 'https://t.co/dAwaE8Dg0C': 1, 'have."': 1, 'projecting': 1, 'beat': 1, 'Too': 1, 'Mexican,': 1, 'career—and': 1, 'done': 1, 'ahead': 1, 'apology.': 1, 'everything': 1, 'drive': 1, 'poverty,': 1, 'Sexes.”': 1, 'For': 1, 'days': 1, 'disabilities.': 1, 'stronger': 1, 'https://t.co/XwvEuxsrOV': 1, 'everything.': 1, 'targeting': 1, '"When': 1, 'Muslims,': 1, 'glue."': 1, 'accused': 1, 'turned': 1, 'especially': 1, 'world.': 1, 'childhood': 1, 'wounded,': 1, 'prevail.”': 1, 'siding': 1, 'co-owner': 1, 'Foundation': 1, 'trail.': 1, 'Remembrance': 1, 'https://t.co/fiXgr6S3Ye': 1, 'simple.': 1, 'https://t.co/DXlybx7oA5': 1, 'bridge': 1, 'struggling': 1, 'Bobby': 1, 'pal,': 1, '"Elections': 1, 'lifetime."': 1, 'working': 1, 'list': 1, 'fight': 1, 'again.': 1, 'businesses,': 1, 'debt.': 1, 'story,': 1, 'send': 1, 'proves': 1, 'We’re': 1, 'fans.': 1, "She's": 1, 'debt,': 1, 'full-time': 1, 'like,': 1, 'today': 1, 'himself,': 1, 'electrical': 1, 'fear.': 1, 'torture': 1, 'Emmy,': 1, 'candidacy:': 1, 'life,': 1, 'USAF!': 1, 'Plans,': 1, 'qualified': 1, 'That': 1, 'Minnesota,': 1, 'poisoning': 1, 'ridiculous': 1, 'work.': 1, 'spending': 1, 'https://t.co/3ZIezeRTl9': 1, 'zero': 1, 'served': 1, 'Grateful': 1, 'sign': 1, '"Trump': 1, 'hatred': 1, 'run': 1, 'terrible': 1, 'failing': 1, 'solving': 1, 'laws.': 1, 'lesson': 1, 'Check': 1, 'birthday,': 1, 'releasing': 1, 'Apologize': 1, 'paranoia.': 1, 'certificates': 1, 'Jersey,': 1, '—@BernieSanders': 1, '"She': 1, 'push': 1, 'years,': 1, '"Like': 1, 'refuses': 1, 'attacked': 1, 'ET': 1, 'https://t.co/mHGncsXG6y': 1, '.@TimKaine': 1, 'face.': 1, 'months': 1, 'w…': 1, 'vice': 1, 'graduation': 1, 'charitable': 1, 'home': 1, 'https://t.co/mYba5FCBrb': 1, 'shouldn’t': 1, '.@FLOTUS': 1, 'what.': 1, 'Find': 1, 'blame': 1, 'ad': 1, 'Do': 1, 'end.': 1, 'shooting': 1, 'nominee:': 1, 'https://t.co/eADlIG9aQL': 1, 'https://t.co/XBCJ4mTj24': 1, 'Any': 1, 'year,': 1, 'https://t.co/0dVB5B0gbC': 1, 'Optimism,': 1, 'thinking': 1, 'Mitt': 1, 'https://t.co/GyveEjARku': 1, 'https://t.co/nrjcqfGiRe': 1, 'saddled': 1, 'families,': 1, '“The': 1, 'lie': 1, 'bully."': 1, 'don’t': 1, 'gives': 1, 'tuition-free': 1, 'figure.': 1, 'Kids': 1, 'deflect': 1, 'returns.': 1, 'alongside': 1, 'https://t.co/f4YzTBmIdl': 1, 'education': 1, 'https://t.co/DhSlyM6ILQ': 1, 'https://t.co/lKDDD0wwsn': 1, 'Take': 1, 'today.': 1, 'afraid': 1, 'problems': 1, 'taxpayers:': 1, 'how:': 1, 'color.': 1, 'fellow': 1, 'service': 1, "he's": 1, 'fairness': 1, 'simple': 1, 'cancer': 1, 'college?': 1, 'November.': 1, 'killed': 1, 'feel': 1, 'passed': 1, 'https://t.co/NReJ3wJE8l': 1, 'waited': 1, '@FallonTonight': 1, 'quit—no': 1, 'crisis—but': 1, 'Register': 1, 'innate': 1, 'keep': 1, 'lying.': 1, 'approved': 1, 'jury': 1, 'Bridges,': 1, 'demand': 1, 'hear."': 1, '“You’ve': 1, 'incites': 1, 'destroy': 1, 'accept': 1, 'president."': 1, 'Obama.”': 1, 'Go': 1, 'Wall': 1, 'come': 1, 'faithful': 1, 'welcoming': 1, 'Day,': 1, 'https://t.co/tlfpcbVqkT': 1, 'resilience': 1, '—Donald': 1, 'forward': 1, 'afraid…we': 1, 'Addiction': 1, 'seeking': 1, "We're": 1, 'treats': 1, 'Over': 1, 'Congratulations': 1, 'purchase': 1, 'communities': 1, 'power.': 1, 'habit': 1, 'debt?': 1, 'send-off?': 1, 'us.': 1, 'Joel': 1, 'https://t.co/V9Uz3jVEjN': 1, 'https://t.co/3mQgqZ7b8V': 1, 'previously': 1, 'Happy': 1, 'yesterday,': 1, 'bad': 1, 'Indiana,': 1, 'Aleatha:': 1, 'paintings': 1, 'seriously.”': 1, 'https://t.co/mYuTS4qgF4': 1, '@MercersDairy,': 1, 'https://t.co/muVNwgLSRs': 1, 'economic': 1, 'condemn': 1, 'Expressing': 1, 'owes': 1, 'theory,': 1, 'https://t.co/RGUqGN4I7i': 1, 'College': 1, 'child': 1, 'barriers': 1, 'presidency."': 1, 'Tolerance': 1, 'Live': 1, 'down.': 1, "they're": 1, 'Or': 1, 'November,': 1, 'history': 1, 'undone.': 1, 'you’ve': 1, 'message:': 1, 'mistakes.': 1, 'hate—not': 1, 'discrimination': 1, 'finally': 1, 'lead': 1, 'ago': 1, 'POW,': 1, 'unarmed': 1, '"Your': 1, 'six-foot-tall': 1, 'often': 1, 'early': 1, 'nobody': 1, 'faced': 1, '@ChelseaClinton': 1, 'concerned': 1, 'hiding': 1, 'show.': 1, '"Let': 1, 'Virginia:': 1, '2008—but': 1, 'up.': 1, 'white': 1, 'seen.”': 1, 'problems."': 1, 'job,': 1, 'Jean': 1, 'rewards': 1, 'small': 1, '—Barack': 1, 'generations.': 1, 'States,': 1, 'for,': 1, 'https://t.co/tWWEMx0T9s': 1, 'appointed': 1, "week's": 1, 'responders”': 1, 'https://t.co/J3Jq21ejtR': 1, '@FLOTUS:': 1, 'Democracy': 1, 'lets': 1, 'Every': 1, 'Romney': 1, "We'll": 1, 'outside-in': 1, 'times': 1, 'Very': 1, 'forgo': 1, 'https://t.co/tXLPQtR7tb': 1, 'friends': 1, 'we’re': 1, '60\%': 1, 'adults': 1, '"Our': 1, 'https://t.co/xYebpm9NaN': 1, 'pay': 1, "everyone's": 1, 'appearance': 1, 'reveals': 1, 'divisive': 1, 'trail': 1, 'pen': 1, 'strongly': 1, 'systemic': 1, 'mark': 1, 'thrilled': 1, 'Janelle': 1, 'https://t.co/Qo1RmQDwd6': 1, 'tennis': 1, 'lies': 1, 'cannon': 1, 'try': 1, 'beliefs': 1, 'https://t.co/TlXODnaV53': 1, 'shares': 1, 'threat': 1, '50': 1, '@ChildDefender,': 1, 'against:': 1, 'turns': 1, 'Clinton,': 1, 'undermine': 1, 'choice,': 1, 'FACT:': 1, 'commitment': 1, 'interests—but': 1, 'becoming': 1, 'caring': 1, 'must': 1, 'Psychologists': 1, 'opportunity': 1, '9': 1, 'not.”': 1, 'yours,': 1, 'laid': 1, 'https://t.co/KHguTDbKW9': 1, 'succeed.': 1, 'families."': 1, 'tide,': 1, 'qualifications': 1, 'went': 1, '“I': 1, 'presidency': 1, 'almost,': 1, 'justice': 1, 'I?"': 1, 'National': 1, 'bills.': 1, 'knowingly': 1, 'disabilities—to': 1, '9-year-old': 1, 'climate': 1, 'story': 1, 'smart': 1, 'could': 1, 'catastrophe."': 1, 'including': 1, 'Just': 1, '—Karen': 1, 'up!):': 1, 'buys': 1, 'be.”': 1, '@TempleUniv': 1, 'held': 1, 'decisions': 1, 'campaign."': 1, 'Anastasia—he': 1, 'overdue': 1, 'Kaine!”': 1, 'ride': 1, 'https://t.co/OmDyINNCrW': 1, 'serving': 1, 'job."': 1, 'past.': 1, 'charge.': 1, 'Americans,': 1, 'origin': 1, 'helped': 1, 'resilient': 1, 'Going': 1, 'hands': 1, 'https://t.co/w00QO1GwyH': 1, 'trust': 1, 'took': 1, 'President': 1, 'face': 1, 'together,': 1, 'de-legitimize': 1, 'Charlotte': 1, 'political': 1, 'work,': 1, 'hard': 1, '8': 1, 'favorite': 1, 'Ideas,': 1, 'violence': 1, 'stems': 1, 'racism,': 1, 'sit': 1, 'War': 1, 'nominee.': 1, 'Hoping': 1, 'elect': 1, "hasn't.": 1, 'lawsuits.': 1, 'guy': 1, 'stop.': 1, 'https://t.co/G06Ol90j1O': 1, 'Next': 1, 'https://t.co/tDeBH37w7h': 1, 'person': 1, 'prepared': 1, 'ideas."': 1, 'decides': 1, 'plain': 1, 'done.': 1, 'stunts': 1, 'away': 1, 'becomes': 1, 'President,': 1, 'words': 1, 'To': 1, 'this."': 1, 'https://t.co/NblU3Tth7T': 1, 'around.': 1, 'As': 1, 'See': 1, 'priority': 1, '"Read': 1, 'bullying,': 1, 'generation': 1, 'Office': 1, 'seem': 1, 'preventing': 1, 'https://t.co/2LRtZBls9A': 1, 'together.”': 1, 'r…': 1, 'Meet': 1, 'them"': 1, 'Have': 1, 'there:': 1, 'qualifies': 1, 'https://t.co/KzgPQgPjxK': 1, 'thing': 1, 'Street—not': 1, 'deplorable.': 1, 'https://t.co/qaswl7IOOJ': 1, 'ballot': 1, 'That’s': 1, 'Office.': 1, 'building': 1, 'inclusive,': 1, 'draw': 1, 'shows': 1, 'reform.': 1, 'vets.': 1, 'equal.': 1, 'behind': 1, 'cynicism,': 1, 'https://t.co/0aDgpwHtjv': 1, 'Puerto': 1, 'standard': 1, 'girls': 1, 'audit—is': 1, 'owner,': 1, 'hope': 1, '@TempleUniv:': 1, 'https://t.co/7Sus2PxlWC': 1, 'https://t.co/GP4rfhPDGm': 1, 'ordinary': 1, 'https://t.co/FIhZYLmy1l': 1, 'thought,': 1, 'birth': 1, 'drowning': 1, 'voter.': 1, 'Catch': 1, 'paying': 1, 'fan': 1, 'https://t.co/tEJ9ATm9BS': 1, '“Let’s': 1, 'open,': 1, 'change—or': 1, 'he,': 1, '*multiple*': 1, 'apparent': 1, 'https://t.co/tmHf8m2CdX': 1, 'https://t.co/lTxRVn3NBM': 1, 'hearts': 1, 'defeated': 1, 'Obama.': 1, 'won’t': 1, '—@Lin\_Manuel': 1, 'outage': 1, '1973,': 1, 'deeply': 1, 'registration': 1, 'Again,': 1, '“Your': 1, 'families.': 1, 'Four': 1, 'dreams': 1, '\$258,000': 1, 'ultimate': 1, 'loose': 1, 'answer': 1, 'Tim': 1, 'honestly': 1, 'onto': 1, 'legacy': 1, 'reject': 1, 'foundation': 1, 'Scott.': 1, 'discriminating': 1, 'name-calling': 1, 'examples': 1, 'distinguished': 1, 'bat': 1, 'https://t.co/3lJjQEQ0BR': 1, 'election,': 1, 'movement.': 1, 'speak': 1, 'undermining': 1, 'Star': 1, 'unwritten.': 1, 'resto…': 1, 'aren’t': 1, 'Trump:': 1, 'left': 1, '@CHCI': 1, 'graduate': 1, 'Main': 1, 'he’s': 1, 'denying': 1, 'American.”': 1, 'tear': 1, 'York."': 1, 'millions': 1, 'friends,': 1, 'terrorist': 1, 'you."': 1, 'normal': 1, 'pushing': 1, 'major': 1, 'https://t.co/nuG8Gqmzt1': 1, 'rhetoric': 1, 'choice': 1, '6-year-olds': 1, 'clear:': 1, 'Payoffs.': 1, 'nominee': 1, 'opportunities': 1, 'before.': 1, '@WellsFargo': 1, '“On': 1, 'mistreat': 1, 'veteran': 1, 'rights': 1, 'career…focused': 1, 'out.': 1, '70': 1, 'https://t.co/B8PCks6yXL': 1, "don't": 1, 'money—on:': 1, 'value.': 1, 'Be': 1, 'decide': 1, 'dreams,': 1, 'lift': 1, 'https://t.co/lje3lKrZQy': 1, 'Simply': 1, 'behind.': 1, 'beings,': 1, 'energy': 1, 'said,': 1, '@TimKaine': 1, 'bottom': 1, 'opponent': 1, 'together': 1, 'matters.': 1, 'nothing': 1, 'family,': 1, 'Answers,': 1, '“What': 1, 'daughters': 1, 'enough.': 1, 'disease—not': 1, '"I\textbackslash{}'m': 1, 'shot': 1, 'jobs': 1, 'https://t.co/HeafYwy0Fp': 1, 'poverty.': 1, 'hear': 1, 'disclosure': 1, 'temperament': 1, 'https://t.co/XMDZPtLNMB': 1, 'down,': 1, 'courage': 1, '"We’re': 1, 'Americans.”': 1, 'now.': 1, '🎤': 1, 'https://t.co/oZIm2is1lX': 1, 'worse.': 1, 'today,': 1, 'Attempting': 1, "Can't": 1, 'Russia': 1, 'birtherism': 1, 'headline': 1, 'looked': 1, 'reform': 1, 'https://t.co/1aWqDOKh7p': 1, 'today.”': 1, 'tribute': 1, 'business': 1, 'speaks': 1, 'service"': 1, 'president{\ldots}we': 1, 'said:': 1, 'put': 1, 'find': 1, "aren't": 1, 'actually': 1, 'mom': 1, 'counted': 1, 'close': 1, 'https://t.co/0r1N6R8rV6': 1, 'podcast:': 1, 'King': 1, 'resolve.': 1, 'battlefield.': 1, 'star': 1, '\#TerenceCrutcher': 1, 'two': 1, 'Another': 1, '@OfficialCBC:': 1, 'Then': 1, 'facing': 1, 'me,': 1, 'daughters?': 1, 'democracy,': 1, 'insults': 1, 'conflict': 1, '"Progress': 1, 'progressive,': 1, 'cower.': 1, 'letters': 1, 'defend.': 1, 'raft': 1, 'https://t.co/C5bXw5brI9': 1, 'getting': 1, 'benefits.': 1, 'reflecting': 1, 'https://t.co/GgDeBBfoUm': 1, 'violence,': 1, 'votes,': 1, 'https://t.co/VeDJknt4JH': 1, 'did:': 1, 'income': 1, 'actions': 1, 'right.': 1, 'affordable': 1, 'weekend’s': 1, 'debt-free': 1, 'Justice': 1, 'line.': 1, 'aimed': 1, 'workplace.': 1, 'woman—I': 1, 'https://t.co/vmavvobLcs': 1, 'attention': 1, 'Nobody': 1, 'tries': 1, 'race': 1, 'number': 1, 'decision': 1, 'refuse': 1, '"A': 1, 'https://t.co/v4rISVHYuG': 1, 'do:': 1, 'ensure': 1, 'resolve,': 1, 'candidate.': 1, 'https://t.co/Er2YqHQVhl': 1, 'down…she': 1, 'taking': 1, 'https://t.co/4uBuIljQML': 1, 'indebted': 1, 'science': 1, 'elected': 1, 'better.': 1, 'commit': 1, 'https://t.co/vX0Oycto1Q': 1, 'Portraits': 1, 'tell': 1, 'everyone:': 1, 'sticker': 1, 'old,': 1, 'women,': 1, 'news.': 1, 'hears': 1, 'faults': 1, 'Scott': 1, 'https://t.co/IX06FtcZG8': 1, 'started.': 1, 'him.': 1, 'treat': 1, 'entrepreneurial': 1, 'data': 1, 'POW': 1, 'isn’t': 1, 'asinine.': 1, 'enough': 1, 'worst': 1, 'https://t.co/NSy3fkcu1c': 1, 'trump': 1, 'Legal': 1, 'children': 1, 'https://t.co/gzNvfNPeNu': 1, 'degree."': 1, 'fall': 1, 'bullies': 1, '11:35pm': 1, 'power': 1, 'https://t.co/fCcXd1MrTo': 1, 'https://t.co/t2F93Ml785': 1, 'WWII': 1, 'retweets': 1, 'RT': 1, 'champion': 1, 'https://t.co/jaMcdARYn1': 1, '“Battle': 1, 'https://t.co/yTAG2iT8WL': 1, 'https://t.co/svkSUzhwYz': 1, 'https://t.co/5WX2qYgUjC': 1, 'safe': 1, 'lied."': 1, 'hard,': 1, 'human': 1, 'spectacle': 1, 'society': 1, 'Latino': 1, 'Pretty': 1, 'community': 1, 'family': 1, 'incident.': 1, 'hat…': 1, 'Nothing—including': 1, "city's": 1, 'https://t.co/gYbm5HxfxG': 1, 'Billie': 1, 'bank': 1, 'respect.': 1, 'election.': 1, 'Building': 1, 'running': 1, 'https://t.co/SmLmTrVhOr': 1, 'scale': 1, 'Gold': 1, 'record': 1, '—@POTUS:': 1, '"Vote."': 1, 'Big': 1, 'add': 1, 'powerful:': 1, "Here's": 1, 'always.': 1, '@USAirForce': 1, 'Hillary…': 1, "wasn't": 1, 'break': 1, 'money—to': 1, 'https://t.co/1IrjWddzzy': 1, 'https://t.co/yq9IWnvXUc': 1, 'entire': 1, '\#LoveTrumpsHate': 1, 'endorsing': 1, 'Orlando:': 1, 'debate.': 1, 'refused': 1, 'problems.': 1, 'endeavored': 1, 'alone': 1, 'true': 1, 'up.”': 1, 'sober,': 1, 'foundation—funded': 1, 'Is': 1, 'friend.': 1, 'https://t.co/qg6J7SXrr0': 1, 'faces': 1, '@realDonaldTrump': 1, '@AnastasiaSomoza': 1, 'serve': 1, '@FLOTUS': 1, 'progress,': 1, 'you,': 1, 'cheering': 1, 'thoughts': 1, 'lying': 1, 'healthy.': 1, 'test': 1, 'moments': 1, '"He\textbackslash{}'s': 1, 'disgrace.': 1, 'legal': 1, 'blown': 1, 'friend,': 1, 'breast': 1, 'Terence': 1, 'alone.': 1, 'prisoners': 1, 'real,': 1, 'president,': 1, 'https://t.co/mpGBCNlemA': 1, 'https://t.co/mpGiRIaPgD': 1, 'comes': 1, 'you.': 1, '“This': 1, 'pays': 1, 'divides.': 1, 'https://t.co/Jqf2jmx3D0': 1, 'https://t.co/CIoKKKIxqz': 1, 'Planning': 1, 'understand': 1, '"did': 1, 'wants': 1, 'go.': 1, 'safer{\ldots}and': 1, 'debt."': 1, 'Crutcher.': 1, 'choose': 1, 'wrong."': 1, 'stage': 1, 'Street': 1, 'message.”': 1, 'https://t.co/VzUQByCN2A': 1, 'higher': 1, 'charity': 1, 'helps': 1, 'unbearable,': 1, 'officers—but': 1, 'veterans.': 1, 'honor': 1, 'candidates': 1, 'meet': 1, 'alone."': 1, '"Everyone': 1, 'https://t.co/Y2oG1CS2AN': 1, '\#OpioidAwarenessWeek': 1, 'began': 1, 'path': 1, 'rubber,': 1, 'define': 1, 'inside-out.': 1, 'her."': 1, 'Republicans': 1, 'help.': 1, 'kind': 1, 'ballot."': 1, 'advocate': 1, 'Chip': 1, 'https://t.co/h4qUNNnTOf': 1, 'perjury.': 1, 'read': 1, 'https://t.co/m9H9b9X7Ar': 1, 'Watch': 1, 'given': 1, 'https://t.co/sYyqDHAVXp': 1, 'settlements.': 1, 'https://t.co/PhnJJoDmPD': 1, 'Leading': 1, 'https://t.co/Gxp2QdeIhH': 1, '@NMAAHC': 1, 'say:': 1, 'themselves?': 1, 'moral': 1, 'section,': 1, 'rate': 1, 'voters?': 1, 'supremacists,': 1, 'None': 1, 'write': 1, 'win': 1, 'https://t.co/lkOFcHI4Py': 1, 'officers.': 1, 'tenants': 1, 'don’t,': 1, 'lifetime’s': 1, 'ties': 1, 'biggest': 1, 'vote.”': 1, 'Most': 1, "you'll": 1, 'under-investment': 1, 'people.': 1, 'party': 1, 'reason': 1, "hasn't": 1, 'https://t.co/5TU9olTqd5': 1, "she's": 1, 'https://t.co/NTeF9u8JpN': 1, 'walls.': 1, '"He': 1, 'tuition.”': 1, "mate—he's": 1, 'https://t.co/UP93LCzURv': 1, 'also': 1, 'American.': 1, 'seek': 1, 'https://t.co/enl4NTjdX4': 1, 'cable': 1, "muted—there's": 1, 'disabilities,': 1, 'people,': 1, 'Riggs': 1, 'welcomes': 1, 'challenges': 1, 'fairly,': 1, '"I’m': 1, 'Kate!': 1, 'yet': 1, 'vigilant,': 1, 'calls': 1, 'delay.': 1, '(plus,': 1, 'Obama:': 1, 'inequality': 1, 'since': 1, 'free': 1, 'anger.': 1, 'sits': 1\})
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}65}]:} \PY{n}{a} \PY{o}{=} \PY{n}{Counter}\PY{p}{(}\PY{n}{filterHillaryClinton}\PY{p}{)}\PY{o}{.}\PY{n}{most\PYZus{}common}\PY{p}{(}\PY{l+m+mi}{20}\PY{p}{)}
+         \PY{n+nb}{print} \PY{p}{(}\PY{n}{a}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[('Trump', 41), ('Donald', 26), ('We', 24), ('https://t.co/tTgeqxNqYm', 13), ('president', 11), ('make', 11), ('people', 10), ('want', 10), ('—@FLOTUS', 8), ('"I', 7), ('American', 7), ('got', 7), ('one', 6), ('build', 6), ('us', 6), ('college', 6), ('women', 6), ('Clinton', 6), ("Hillary's", 6), ('need', 5)]
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}66}]:} \PY{k+kn}{from} \PY{n+nn}{prettytable} \PY{k}{import} \PY{n}{PrettyTable}
+         \PY{n+nb}{sorted}\PY{p}{(}\PY{n}{a}\PY{p}{)}
+         \PY{n}{pt} \PY{o}{=} \PY{n}{PrettyTable}\PY{p}{(}\PY{n}{field\PYZus{}names}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{word}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Frequency\PYZus{}HillaryClinton}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+         \PY{p}{[} \PY{n}{pt}\PY{o}{.}\PY{n}{add\PYZus{}row}\PY{p}{(}\PY{n}{row}\PY{p}{)} \PY{k}{for} \PY{n}{row} \PY{o+ow}{in} \PY{n+nb}{sorted}\PY{p}{(}\PY{n}{a}\PY{p}{,} \PY{n}{reverse}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{20}\PY{p}{]} \PY{p}{]}
+         \PY{n}{pt}\PY{o}{.}\PY{n}{max\PYZus{}width}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Text}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{l+m+mi}{50}
+         \PY{n}{pt}\PY{o}{.}\PY{n}{align}\PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{l}\PY{l+s+s1}{\PYZsq{}}
+         \PY{n+nb}{print} \PY{p}{(}\PY{n}{pt}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
++-------------------------+--------------------------+
+| word                    | Frequency\_HillaryClinton |
++-------------------------+--------------------------+
+| —@FLOTUS                | 8                        |
+| women                   | 6                        |
+| want                    | 10                       |
+| us                      | 6                        |
+| president               | 11                       |
+| people                  | 10                       |
+| one                     | 6                        |
+| need                    | 5                        |
+| make                    | 11                       |
+| https://t.co/tTgeqxNqYm | 13                       |
+| got                     | 7                        |
+| college                 | 6                        |
+| build                   | 6                        |
+| We                      | 24                       |
+| Trump                   | 41                       |
+| Hillary's               | 6                        |
+| Donald                  | 26                       |
+| Clinton                 | 6                        |
+| American                | 7                        |
+| "I                      | 7                        |
++-------------------------+--------------------------+
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}68}]:} \PY{c+c1}{\PYZsh{}Although labels for each word are not provided, x\PYZhy{}axis values have been sorted so that the relationship between word frequencies is more apparent.}
+         \PY{c+c1}{\PYZsh{}Each axis has been adjusted to a logarithmic scale to \PYZdq{}squash\PYZdq{} the curve being displayed}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}69}]:} \PY{n}{word\PYZus{}counts} \PY{o}{=} \PY{n+nb}{sorted}\PY{p}{(}\PY{n}{Counter}\PY{p}{(}\PY{n}{filterHillaryClinton}\PY{p}{)}\PY{o}{.}\PY{n}{values}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{reverse}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{loglog}\PY{p}{(}\PY{n}{word\PYZus{}counts}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Freq}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Word Rank}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}69}]:} <matplotlib.text.Text at 0x115ded2e8>
+\end{Verbatim}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Hillary_twetter-Copy1_files/Hillary_twetter-Copy1_40_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}77}]:} \PY{c+c1}{\PYZsh{} Generating a histogram of retweet counts}
+         \PY{c+c1}{\PYZsh{}Using underscores while unpacking values in}
+         \PY{c+c1}{\PYZsh{} a tuple is idiomatic for discarding them}
+         \PY{n}{retweet} \PY{o}{=} \PY{n}{realHillaryClinton}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{retweet\PYZus{}count\PYZus{}x}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         
+         \PY{c+c1}{\PYZsh{}print(retweet)}
+         \PY{n}{counts} \PY{o}{=} \PY{p}{[}\PY{n}{count} \PY{k}{for} \PY{n}{count} \PY{o+ow}{in} \PY{n}{retweet}\PY{p}{]}
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{hist}\PY{p}{(}\PY{n}{counts}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Retweets for Hillary Clinton original pull}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Bins (number of times retweeted)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Number of tweets in bin}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+         \PY{n+nb}{print} \PY{p}{(}\PY{n}{counts}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[991, 630, 1390, 1213, 840, 826, 2218, 1190, 999, 9547, 3263, 3316, 3273, 6117, 1941, 2779, 2639, 3054, 3126, 5765, 590, 1119, 1357, 1948, 1271, 1773, 1139, 1114, 1182, 1203, 2577, 2212, 5308, 6298, 3244, 3772, 7847, 2635, 4727, 4537, 4188, 5267, 1408, 2214, 5960, 2378, 1631, 2922, 2321, 5100, 684, 1221, 2018, 1454, 1968, 3114, 2250, 6381, 3479, 6343, 2793, 4107, 1222, 12877, 15073, 1570, 7618, 1731, 1217, 980, 586, 2770, 1588, 4720, 871, 564, 1363, 731, 682, 561, 546, 517, 951, 712, 811, 605, 1334, 2398, 766, 1641, 995, 1614, 2644, 1676, 3545, 1836, 3217, 5835, 1671, 6089, 4053, 12172, 1234, 4087, 3173, 718, 5351, 2755, 3460, 4735, 3790, 1737, 6113, 2230, 1263, 922, 445, 669, 691, 614, 613, 832, 667, 657, 675, 874, 726, 1226, 1774, 3403, 1476, 1450, 9741, 1987, 3622, 6744, 869, 5106, 3914, 7353, 2089, 2551, 2190, 13519, 2582, 1887, 3518, 21847, 13456, 2181, 8968, 1973, 2821, 4025, 1264, 4668, 9935, 2791, 2984, 4171, 2705, 2403, 1947, 2230, 1156, 1384]
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Hillary_twetter-Copy1_files/Hillary_twetter-Copy1_41_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}78}]:} \PY{c+c1}{\PYZsh{} Generating a histogram of retweet counts}
+         \PY{c+c1}{\PYZsh{}Using underscores while unpacking values in}
+         \PY{c+c1}{\PYZsh{} a tuple is idiomatic for discarding them}
+         \PY{n}{retweet} \PY{o}{=} \PY{n}{realHillaryClinton}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{retweet\PYZus{}count\PYZus{}y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         
+         \PY{c+c1}{\PYZsh{}print(retweet)}
+         \PY{n}{counts} \PY{o}{=} \PY{p}{[}\PY{n}{count} \PY{k}{for} \PY{n}{count} \PY{o+ow}{in} \PY{n}{retweet}\PY{p}{]}
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{hist}\PY{p}{(}\PY{n}{counts}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Retweets for Hillary Clinton after 5 min}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Bins (number of times retweeted)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Number of tweets in bin}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+         \PY{n+nb}{print} \PY{p}{(}\PY{n}{counts}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[991, 630, 1390, 1213, 840, 826, 2218, 1190, 999, 9547, 3263, 3316, 3273, 6117, 1941, 2779, 2639, 3054, 3126, 5765, 590, 1119, 1357, 1948, 1271, 1773, 1139, 1114, 1182, 1203, 2577, 2212, 5308, 6298, 3244, 3772, 7847, 2635, 4727, 4537, 4188, 5267, 1408, 2214, 5960, 2378, 1631, 2922, 2321, 5100, 684, 1221, 2018, 1454, 1968, 3114, 2250, 6381, 3479, 6343, 2793, 4107, 1222, 12877, 15073, 1570, 7619, 1731, 1217, 980, 586, 2770, 1588, 4720, 871, 564, 1363, 731, 682, 561, 546, 517, 951, 712, 811, 605, 1334, 2398, 766, 1641, 995, 1614, 2644, 1676, 3545, 1836, 3217, 5835, 1671, 6089, 4053, 12172, 1234, 4087, 3173, 718, 5351, 2755, 3461, 4735, 3790, 1737, 6113, 2230, 1263, 922, 445, 669, 691, 614, 613, 832, 667, 657, 675, 874, 726, 1226, 1774, 3403, 1476, 1450, 9741, 1987, 3622, 6745, 869, 5108, 3914, 7356, 2089, 2551, 2190, 13521, 2582, 1887, 3518, 21849, 13457, 2181, 8968, 1973, 2821, 4025, 1264, 4670, 9939, 2792, 2986, 4181, 2709, 2409, 1952, 2238, 1160, 1398]
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Hillary_twetter-Copy1_files/Hillary_twetter-Copy1_42_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}79}]:} \PY{k+kn}{from} \PY{n+nn}{nltk} \PY{k}{import} \PY{n}{FreqDist}
+         
+         \PY{n}{freqdist} \PY{o}{=} \PY{n}{nltk}\PY{o}{.}\PY{n}{FreqDist}\PY{p}{(}\PY{n}{filterHillaryClinton}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}80}]:} \PY{n}{freqdist}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{l+m+mi}{50}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Hillary_twetter-Copy1_files/Hillary_twetter-Copy1_44_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} 
+\end{Verbatim}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
